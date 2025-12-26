@@ -26,6 +26,7 @@ export const run = () => {
       '--tasks <file>',
       "Path to tasks JSON file containing a list of {taskId, query}. Use 'demo' to run built-in sample tasks",
     )
+    .option('--max-loop-count <number>', 'Maximum number of loops to run', '1000')
     .action(async (options: CliOptions) => {
       try {
         await start(options);

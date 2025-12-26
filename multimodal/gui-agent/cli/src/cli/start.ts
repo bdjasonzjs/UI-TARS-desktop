@@ -25,6 +25,7 @@ export interface CliOptions {
   config?: string;
   output?: string;
   tasks?: string;
+  maxLoopCount?: string;
 }
 
 export const start = async (options: CliOptions) => {
@@ -37,6 +38,7 @@ export const start = async (options: CliOptions) => {
     model: '',
     provider: 'openai', // Default provider
     useResponsesApi: false,
+    maxLoopCount: options.maxLoopCount ? Number(options.maxLoopCount) : 1000,
   };
 
   if (options.presets) {
