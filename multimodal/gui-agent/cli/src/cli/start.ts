@@ -8,6 +8,9 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import os from 'node:os';
+import ffmpeg from 'fluent-ffmpeg';
+// @ts-ignore
+import ffmpegStatic from 'ffmpeg-static';
 
 import fetch from 'node-fetch';
 import { GUIAgent } from '@gui-agent/agent-sdk';
@@ -29,6 +32,10 @@ export interface CliOptions {
 }
 
 export const start = async (options: CliOptions) => {
+  if (ffmpegStatic) {
+    ffmpeg.setFfmpegPath(ffmpegStatic);
+  }
+
   const CONFIG_PATH = options.config || path.join(os.homedir(), '.gui-agent-cli.json');
 
   // read config file
@@ -298,7 +305,12 @@ export const start = async (options: CliOptions) => {
 
     for (const task of tasks) {
       try {
+        const startTime = Date.now();
+        console.log(`[CLI] Starting task: ${task.taskId} at ${new Date(startTime).toISOString()}`);
         const resultEvent = await guiAgent.run(task.query);
+        const endTime = Date.now();
+        const duration = endTime - startTime;
+
         const eventStream = guiAgent.getEventStream();
         const allEvents = eventStream.getEvents();
         const runStartEvents = allEvents.filter((e: any) => e.type === 'agent_run_start');
@@ -317,6 +329,106 @@ export const start = async (options: CliOptions) => {
         const screenshotEvents = envEvents.filter(
           (e: any) => e.metadata && e.metadata.type === 'screenshot',
         );
+
+        // Generate video recording from screenshots
+        let videoPath = '';
+        if (screenshotEvents.length > 0) {
+          const tempDir = path.join(os.tmpdir(), 'gui-agent-rec', task.taskId);
+          try {
+            fs.mkdirSync(tempDir, { recursive: true });
+
+            const validFrames: { file: string; timestamp: number }[] = [];
+            let frameCount = 0;
+            for (const event of screenshotEvents) {
+              if (Array.isArray((event as any).content)) {
+                const imgPart = ((event as any).content as any[]).find(
+                  (c: any) => c.type === 'image_url' && c.image_url && c.image_url.url,
+                );
+                const dataUri: string | undefined = imgPart?.image_url?.url;
+                if (dataUri && typeof dataUri === 'string' && dataUri.startsWith('data:')) {
+                  const commaIndex = dataUri.indexOf(',');
+                  const base64Data = commaIndex >= 0 ? dataUri.substring(commaIndex + 1) : dataUri;
+                  const buffer = Buffer.from(base64Data, 'base64');
+                  if (buffer.length > 0) {
+                    const extension =
+                      buffer[0] === 0xff && buffer[1] === 0xd8 && buffer[2] === 0xff
+                        ? 'jpg'
+                        : 'png';
+                    const fileName = `${String(frameCount).padStart(4, '0')}.${extension}`;
+                    const framePath = path.join(tempDir, fileName);
+                    fs.writeFileSync(framePath, buffer);
+                    validFrames.push({
+                      file: fileName,
+                      timestamp: (event as any).timestamp || Date.now(),
+                    });
+                    frameCount++;
+                  }
+                }
+              }
+            }
+
+            if (validFrames.length > 0) {
+              const concatFilePath = path.join(tempDir, 'filelist.txt');
+              let fileContent = '';
+              const hasTimestamps = validFrames.some(
+                (f, i) => i > 0 && f.timestamp !== validFrames[0].timestamp,
+              );
+
+              for (let i = 0; i < validFrames.length; i++) {
+                const frame = validFrames[i];
+                let duration = 1.0;
+                if (hasTimestamps && i < validFrames.length - 1) {
+                  const diff = (validFrames[i + 1].timestamp - frame.timestamp) / 1000;
+                  if (diff > 0.1 && diff < 60) duration = diff;
+                } else if (i === validFrames.length - 1) {
+                  duration = 2.0;
+                }
+                fileContent += `file '${frame.file}'\n`;
+                fileContent += `duration ${duration.toFixed(3)}\n`;
+              }
+              if (validFrames.length > 0) {
+                fileContent += `file '${validFrames[validFrames.length - 1].file}'\n`;
+              }
+              fs.writeFileSync(concatFilePath, fileContent);
+
+              const outputVideoPath = path.join(targetOutputDir, `${task.taskId}.mp4`);
+              console.log(`[CLI] Generating video recording: ${outputVideoPath}`);
+
+              await new Promise<void>((resolve, reject) => {
+                ffmpeg()
+                  .input(concatFilePath)
+                  .inputOptions(['-f', 'concat', '-safe', '0'])
+                  .output(outputVideoPath)
+                  .outputOptions([
+                    '-c:v',
+                    'libx264',
+                    '-pix_fmt',
+                    'yuv420p',
+                    '-vf',
+                    'scale=trunc(iw/2)*2:trunc(ih/2)*2',
+                  ])
+                  .on('start', (cmd) => console.log(`[CLI] Ffmpeg command: ${cmd}`))
+                  .on('stderr', (line) => console.log(`[CLI] Ffmpeg stderr: ${line}`))
+                  .on('end', () => resolve())
+                  .on('error', (err: any) => reject(err))
+                  .run();
+              });
+
+              videoPath = outputVideoPath;
+              console.log(`[CLI] Video saved: ${videoPath}`);
+            }
+          } catch (recErr) {
+            console.warn('[CLI] Failed to generate video recording', recErr);
+          } finally {
+            // Cleanup temp dir
+            try {
+              fs.rmSync(tempDir, { recursive: true, force: true });
+            } catch (_) {
+              /* ignore */
+            }
+          }
+        }
+
         const lastScreenshot =
           screenshotEvents.length > 0
             ? (screenshotEvents[screenshotEvents.length - 1] as any)
@@ -344,7 +456,12 @@ export const start = async (options: CliOptions) => {
         const finalAnswer = (resultEvent as any)?.content ?? '';
         const report = {
           taskId: task.taskId,
+          taskContent: task.query,
+          startTime,
+          endTime,
+          duration,
           resultPic: resultPicPath,
+          video: videoPath || null,
           finalAnswer,
         };
         const reportPath = path.join(targetOutputDir, `${task.taskId}.json`);
@@ -360,6 +477,7 @@ export const start = async (options: CliOptions) => {
 
   // Enhanced error logging around agent run
   let resultEvent: any;
+  const startTime = Date.now();
   try {
     console.log(
       '[CLI] Starting GUIAgent run with instruction:',
@@ -384,6 +502,8 @@ export const start = async (options: CliOptions) => {
     }
     throw err;
   }
+  const endTime = Date.now();
+  const duration = endTime - startTime;
 
   try {
     const eventStream = guiAgent.getEventStream();
@@ -408,6 +528,103 @@ export const start = async (options: CliOptions) => {
     fs.mkdirSync(targetOutputDir, { recursive: true });
     console.log(`[CLI] TaskId/SessionId: ${sessionId}`);
 
+    // Generate video recording from screenshots
+    let videoPath = '';
+    if (screenshotEvents.length > 0) {
+      const tempDir = path.join(os.tmpdir(), 'gui-agent-rec', sessionId);
+      try {
+        fs.mkdirSync(tempDir, { recursive: true });
+
+        const validFrames: { file: string; timestamp: number }[] = [];
+        let frameCount = 0;
+        for (const event of screenshotEvents) {
+          if (Array.isArray((event as any).content)) {
+            const imgPart = ((event as any).content as any[]).find(
+              (c: any) => c.type === 'image_url' && c.image_url && c.image_url.url,
+            );
+            const dataUri: string | undefined = imgPart?.image_url?.url;
+            if (dataUri && typeof dataUri === 'string' && dataUri.startsWith('data:')) {
+              const commaIndex = dataUri.indexOf(',');
+              const base64Data = commaIndex >= 0 ? dataUri.substring(commaIndex + 1) : dataUri;
+              const buffer = Buffer.from(base64Data, 'base64');
+              if (buffer.length > 0) {
+                const extension =
+                  buffer[0] === 0xff && buffer[1] === 0xd8 && buffer[2] === 0xff ? 'jpg' : 'png';
+                const fileName = `${String(frameCount).padStart(4, '0')}.${extension}`;
+                const framePath = path.join(tempDir, fileName);
+                fs.writeFileSync(framePath, buffer);
+                validFrames.push({
+                  file: fileName,
+                  timestamp: (event as any).timestamp || Date.now(),
+                });
+                frameCount++;
+              }
+            }
+          }
+        }
+
+        if (validFrames.length > 0) {
+          const concatFilePath = path.join(tempDir, 'filelist.txt');
+          let fileContent = '';
+          const hasTimestamps = validFrames.some(
+            (f, i) => i > 0 && f.timestamp !== validFrames[0].timestamp,
+          );
+
+          for (let i = 0; i < validFrames.length; i++) {
+            const frame = validFrames[i];
+            let duration = 1.0;
+            if (hasTimestamps && i < validFrames.length - 1) {
+              const diff = (validFrames[i + 1].timestamp - frame.timestamp) / 1000;
+              if (diff > 0.1 && diff < 60) duration = diff;
+            } else if (i === validFrames.length - 1) {
+              duration = 2.0;
+            }
+            fileContent += `file '${frame.file}'\n`;
+            fileContent += `duration ${duration.toFixed(3)}\n`;
+          }
+          if (validFrames.length > 0) {
+            fileContent += `file '${validFrames[validFrames.length - 1].file}'\n`;
+          }
+          fs.writeFileSync(concatFilePath, fileContent);
+
+          const outputVideoPath = path.join(targetOutputDir, `${sessionId}.mp4`);
+          console.log(`[CLI] Generating video recording: ${outputVideoPath}`);
+
+          await new Promise<void>((resolve, reject) => {
+            ffmpeg()
+              .input(concatFilePath)
+              .inputOptions(['-f', 'concat', '-safe', '0'])
+              .output(outputVideoPath)
+              .outputOptions([
+                '-c:v',
+                'libx264',
+                '-pix_fmt',
+                'yuv420p',
+                '-vf',
+                'scale=trunc(iw/2)*2:trunc(ih/2)*2',
+              ])
+              .on('start', (cmd) => console.log(`[CLI] Ffmpeg command: ${cmd}`))
+              .on('stderr', (line) => console.log(`[CLI] Ffmpeg stderr: ${line}`))
+              .on('end', () => resolve())
+              .on('error', (err: any) => reject(err))
+              .run();
+          });
+
+          videoPath = outputVideoPath;
+          console.log(`[CLI] Video saved: ${videoPath}`);
+        }
+      } catch (recErr) {
+        console.warn('[CLI] Failed to generate video recording', recErr);
+      } finally {
+        // Cleanup temp dir
+        try {
+          fs.rmSync(tempDir, { recursive: true, force: true });
+        } catch (_) {
+          /* ignore */
+        }
+      }
+    }
+
     let resultPicPath = '';
     if (lastScreenshot && Array.isArray(lastScreenshot.content)) {
       const imgPart = (lastScreenshot.content as any[]).find(
@@ -430,7 +647,12 @@ export const start = async (options: CliOptions) => {
     const finalAnswer = (resultEvent as any)?.content ?? '';
     const report = {
       taskId: sessionId,
+      taskContent: answers.instruction || options.query,
+      startTime,
+      endTime,
+      duration,
       resultPic: resultPicPath,
+      video: videoPath || null,
       finalAnswer,
     };
     const reportPath = path.join(targetOutputDir, `${sessionId}.json`);
