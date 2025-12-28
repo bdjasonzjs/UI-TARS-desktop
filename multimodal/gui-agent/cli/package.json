@@ -20,6 +20,7 @@
   "scripts": {
     "dev": "rslib build --watch",
     "build": "rslib build",
+    "build:prod": "rslib build --config rslib.prod.config.ts && node scripts/post-build.js",
     "build:watch": "rslib build --watch",
     "cli": "node bin/index.js",
     "test": "vitest"
