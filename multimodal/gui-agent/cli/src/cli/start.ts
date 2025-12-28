@@ -31,9 +31,81 @@ export interface CliOptions {
   maxLoopCount?: string;
 }
 
+const saveConversationLog = (events: any[], targetOutputDir: string, sessionId: string) => {
+  const logPath = path.join(targetOutputDir, `${sessionId}.md`);
+  let content = `# Conversation Log - ${sessionId}\n\n`;
+
+  events.forEach((e) => {
+    const time = new Date(e.timestamp || Date.now()).toISOString();
+    content += `## [${time}] ${e.type}\n`;
+
+    if (e.content) {
+      if (Array.isArray(e.content)) {
+        e.content.forEach((part: any) => {
+          if (part.type === 'text') content += `${part.text}\n`;
+          if (part.type === 'image_url') content += `[Image Content]\n`;
+        });
+      } else if (typeof e.content === 'string') {
+        content += `${e.content}\n`;
+      } else {
+        content += `\`\`\`json\n${JSON.stringify(e.content, null, 2)}\n\`\`\`\n`;
+      }
+    }
+
+    if (e.metadata) {
+      // Avoid printing large metadata like screenshots if they are embedded there (usually they are in content or separate)
+      // For screenshot events, metadata might contain type='screenshot'
+      if (e.metadata.type === 'screenshot') {
+        content += `> Action: Screenshot captured\n`;
+      } else {
+        content += `> Metadata: ${JSON.stringify(e.metadata)}\n`;
+      }
+    }
+
+    if (e.input) {
+      content += `> Input: ${JSON.stringify(e.input, null, 2)}\n`;
+    }
+
+    if (e.output) {
+      content += `> Output: ${JSON.stringify(e.output, null, 2)}\n`;
+    }
+
+    content += '\n';
+  });
+
+  try {
+    fs.writeFileSync(logPath, content);
+    console.log(`[CLI] Conversation log saved: ${logPath}`);
+    return logPath;
+  } catch (err) {
+    console.warn(`[CLI] Failed to save conversation log: ${err}`);
+    return null;
+  }
+};
+
 export const start = async (options: CliOptions) => {
   if (ffmpegStatic) {
-    ffmpeg.setFfmpegPath(ffmpegStatic);
+    let finalFfmpegPath = ffmpegStatic;
+    // In production build (bundled), ffmpeg-static might return a path that doesn't exist
+    // because it relies on __dirname which changes after bundling.
+    // However, we copy the binary to the dist folder in post-build script.
+    // We should check if we are running from the bundled version.
+    const bundledFfmpegPath = path.join(__dirname, 'ffmpeg');
+    if (fs.existsSync(bundledFfmpegPath)) {
+      finalFfmpegPath = bundledFfmpegPath;
+      console.log(`[CLI] Using bundled ffmpeg: ${finalFfmpegPath}`);
+    } else {
+      console.log(`[CLI] Using default ffmpeg-static path: ${finalFfmpegPath}`);
+    }
+
+    if (os.platform() === 'darwin' && os.arch() === 'arm64') {
+      console.log(`[CLI] Setting ffmpeg path: ${finalFfmpegPath}`);
+    }
+    ffmpeg.setFfmpegPath(finalFfmpegPath);
+  } else {
+    console.warn(
+      '[CLI] ffmpeg-static not found. Video generation might fail if ffmpeg is not in PATH.',
+    );
   }
 
   const CONFIG_PATH = options.config || path.join(os.homedir(), '.gui-agent-cli.json');
@@ -284,7 +356,7 @@ export const start = async (options: CliOptions) => {
       console.warn('[CLI] Failed to prepare tasks file directory', e);
     }
 
-    let tasks: Array<{ taskId: string; query: string }> = [];
+    let tasks: Array<{ taskId: string; query: string; timeout?: number }> = [];
     try {
       const raw = fs.readFileSync(tasksPath, 'utf-8');
       const parsed = JSON.parse(raw);
@@ -304,14 +376,53 @@ export const start = async (options: CliOptions) => {
     fs.mkdirSync(targetOutputDir, { recursive: true });
 
     for (const task of tasks) {
+      const taskAC = new AbortController();
+      const timeoutMs = task.timeout ?? 25 * 60 * 1000;
+      const timeoutId = setTimeout(() => {
+        console.log(`[CLI] Task ${task.taskId} timed out after ${timeoutMs}ms`);
+        taskAC.abort();
+      }, timeoutMs);
+
+      const onGlobalAbort = () => taskAC.abort();
+      abortController.signal.addEventListener('abort', onGlobalAbort);
+
+      const taskAgent = new GUIAgent({
+        model: {
+          id: config.model,
+          provider: config.provider as any, // Type assertion to avoid TypeScript error
+          baseURL: config.baseURL,
+          apiKey: config.apiKey, // secretlint-disable-line
+        },
+        operator: targetOperator,
+        systemPrompt: systemPrompts.join('\n\n'),
+        // @ts-ignore
+        signal: taskAC.signal,
+      });
+
+      let resultEvent: any;
+      const startTime = Date.now();
+
       try {
-        const startTime = Date.now();
         console.log(`[CLI] Starting task: ${task.taskId} at ${new Date(startTime).toISOString()}`);
-        const resultEvent = await guiAgent.run(task.query);
+        resultEvent = await taskAgent.run(task.query);
+      } catch (taskErr: any) {
+        if (taskAC.signal.aborted) {
+          console.warn(`[CLI] Task ${task.taskId} was aborted (Timeout or SIGINT).`);
+          resultEvent = { content: 'Task aborted or timed out' };
+        } else {
+          console.error(`[CLI] Task failed: ${task.taskId}`, taskErr);
+          resultEvent = { content: `Error: ${taskErr.message}` };
+        }
+      } finally {
+        clearTimeout(timeoutId);
+        abortController.signal.removeEventListener('abort', onGlobalAbort);
+      }
+
+      try {
         const endTime = Date.now();
         const duration = endTime - startTime;
 
-        const eventStream = guiAgent.getEventStream();
+        const eventStream = taskAgent.getEventStream();
         const allEvents = eventStream.getEvents();
         const runStartEvents = allEvents.filter((e: any) => e.type === 'agent_run_start');
         const lastRunStart = runStartEvents[runStartEvents.length - 1] as any;
@@ -404,13 +515,17 @@ export const start = async (options: CliOptions) => {
                     'libx264',
                     '-pix_fmt',
                     'yuv420p',
+                    // scale needs to be even numbers for libx264
                     '-vf',
                     'scale=trunc(iw/2)*2:trunc(ih/2)*2',
                   ])
                   .on('start', (cmd) => console.log(`[CLI] Ffmpeg command: ${cmd}`))
                   .on('stderr', (line) => console.log(`[CLI] Ffmpeg stderr: ${line}`))
                   .on('end', () => resolve())
-                  .on('error', (err: any) => reject(err))
+                  .on('error', (err: any) => {
+                    console.error('[CLI] Ffmpeg error:', err);
+                    reject(err);
+                  })
                   .run();
               });
 
@@ -453,6 +568,8 @@ export const start = async (options: CliOptions) => {
           console.log('[CLI] No screenshot captured; resultPic will be empty.');
         }
 
+        const conversationLogPath = saveConversationLog(rangeEvents, targetOutputDir, task.taskId);
+
         const finalAnswer = (resultEvent as any)?.content ?? '';
         const report = {
           taskId: task.taskId,
@@ -462,14 +579,15 @@ export const start = async (options: CliOptions) => {
           duration,
           resultPic: resultPicPath,
           video: videoPath || null,
+          conversationLog: conversationLogPath,
           finalAnswer,
         };
         const reportPath = path.join(targetOutputDir, `${task.taskId}.json`);
         fs.writeFileSync(reportPath, JSON.stringify(report, null, 2));
         console.log(`Result saved: ${reportPath}`);
         console.log(`[CLI] Report JSON path: ${reportPath}`);
-      } catch (taskErr) {
-        console.error(`[CLI] Task failed: ${task.taskId}`, taskErr);
+      } catch (reportErr) {
+        console.warn(`[CLI] Failed to save report for task ${task.taskId}`, reportErr);
       }
     }
     return;
@@ -478,6 +596,193 @@ export const start = async (options: CliOptions) => {
   // Enhanced error logging around agent run
   let resultEvent: any;
   const startTime = Date.now();
+  let isReportSaved = false;
+
+  const saveSingleTaskReport = async (finalAnswer: string) => {
+    if (isReportSaved) return;
+    isReportSaved = true;
+
+    const endTime = Date.now();
+    const duration = endTime - startTime;
+
+    try {
+      const eventStream = guiAgent.getEventStream();
+      const allEvents = eventStream.getEvents();
+      const runStartEvents = allEvents.filter((e: any) => e.type === 'agent_run_start');
+      const sessionId =
+        runStartEvents.length > 0
+          ? (runStartEvents[runStartEvents.length - 1] as any).sessionId
+          : `${Date.now()}`;
+
+      const envEvents = allEvents.filter((e: any) => e.type === 'environment_input');
+      const screenshotEvents = envEvents.filter(
+        (e: any) => e.metadata && e.metadata.type === 'screenshot',
+      );
+      const lastScreenshot =
+        screenshotEvents.length > 0 ? (screenshotEvents[screenshotEvents.length - 1] as any) : null;
+
+      const targetOutputDir = options.output
+        ? path.resolve(options.output)
+        : path.join(os.homedir(), '.gui-agent-results');
+      console.log(`[CLI] Output directory (resolved): ${targetOutputDir}`);
+      fs.mkdirSync(targetOutputDir, { recursive: true });
+      console.log(`[CLI] TaskId/SessionId: ${sessionId}`);
+
+      // Generate video recording from screenshots
+      let videoPath = '';
+      if (screenshotEvents.length > 0) {
+        const tempDir = path.join(os.tmpdir(), 'gui-agent-rec', sessionId);
+        try {
+          fs.mkdirSync(tempDir, { recursive: true });
+
+          const validFrames: { file: string; timestamp: number }[] = [];
+          let frameCount = 0;
+          for (const event of screenshotEvents) {
+            if (Array.isArray((event as any).content)) {
+              const imgPart = ((event as any).content as any[]).find(
+                (c: any) => c.type === 'image_url' && c.image_url && c.image_url.url,
+              );
+              const dataUri: string | undefined = imgPart?.image_url?.url;
+              if (dataUri && typeof dataUri === 'string' && dataUri.startsWith('data:')) {
+                const commaIndex = dataUri.indexOf(',');
+                const base64Data = commaIndex >= 0 ? dataUri.substring(commaIndex + 1) : dataUri;
+                const buffer = Buffer.from(base64Data, 'base64');
+                if (buffer.length > 0) {
+                  const extension =
+                    buffer[0] === 0xff && buffer[1] === 0xd8 && buffer[2] === 0xff ? 'jpg' : 'png';
+                  const fileName = `${String(frameCount).padStart(4, '0')}.${extension}`;
+                  const framePath = path.join(tempDir, fileName);
+                  fs.writeFileSync(framePath, buffer);
+                  validFrames.push({
+                    file: fileName,
+                    timestamp: (event as any).timestamp || Date.now(),
+                  });
+                  frameCount++;
+                }
+              }
+            }
+          }
+
+          if (validFrames.length > 0) {
+            const concatFilePath = path.join(tempDir, 'filelist.txt');
+            let fileContent = '';
+            const hasTimestamps = validFrames.some(
+              (f, i) => i > 0 && f.timestamp !== validFrames[0].timestamp,
+            );
+
+            for (let i = 0; i < validFrames.length; i++) {
+              const frame = validFrames[i];
+              let duration = 1.0;
+              if (hasTimestamps && i < validFrames.length - 1) {
+                const diff = (validFrames[i + 1].timestamp - frame.timestamp) / 1000;
+                if (diff > 0.1 && diff < 60) duration = diff;
+              } else if (i === validFrames.length - 1) {
+                duration = 2.0;
+              }
+              fileContent += `file '${frame.file}'\n`;
+              fileContent += `duration ${duration.toFixed(3)}\n`;
+            }
+            if (validFrames.length > 0) {
+              fileContent += `file '${validFrames[validFrames.length - 1].file}'\n`;
+            }
+            fs.writeFileSync(concatFilePath, fileContent);
+
+            const outputVideoPath = path.join(targetOutputDir, `${sessionId}.mp4`);
+            console.log(`[CLI] Generating video recording: ${outputVideoPath}`);
+
+            await new Promise<void>((resolve, reject) => {
+              ffmpeg()
+                .input(concatFilePath)
+                .inputOptions(['-f', 'concat', '-safe', '0'])
+                .output(outputVideoPath)
+                .outputOptions([
+                  '-c:v',
+                  'libx264',
+                  '-pix_fmt',
+                  'yuv420p',
+                  // scale needs to be even numbers for libx264
+                  '-vf',
+                  'scale=trunc(iw/2)*2:trunc(ih/2)*2',
+                ])
+                .on('start', (cmd) => console.log(`[CLI] Ffmpeg command: ${cmd}`))
+                .on('stderr', (line) => console.log(`[CLI] Ffmpeg stderr: ${line}`))
+                .on('end', () => resolve())
+                .on('error', (err: any) => {
+                  console.error('[CLI] Ffmpeg error:', err);
+                  reject(err);
+                })
+                .run();
+            });
+
+            videoPath = outputVideoPath;
+            console.log(`[CLI] Video saved: ${videoPath}`);
+          }
+        } catch (recErr) {
+          console.warn('[CLI] Failed to generate video recording', recErr);
+        } finally {
+          // Cleanup temp dir
+          try {
+            fs.rmSync(tempDir, { recursive: true, force: true });
+          } catch (_) {
+            /* ignore */
+          }
+        }
+      }
+
+      let resultPicPath = '';
+      if (lastScreenshot && Array.isArray(lastScreenshot.content)) {
+        const imgPart = (lastScreenshot.content as any[]).find(
+          (c: any) => c.type === 'image_url' && c.image_url && c.image_url.url,
+        );
+        const dataUri: string | undefined = imgPart?.image_url?.url;
+        if (dataUri && typeof dataUri === 'string' && dataUri.startsWith('data:')) {
+          const commaIndex = dataUri.indexOf(',');
+          const base64Data = commaIndex >= 0 ? dataUri.substring(commaIndex + 1) : dataUri;
+          const buffer = Buffer.from(base64Data, 'base64');
+          resultPicPath = path.join(targetOutputDir, `${sessionId}.png`);
+          fs.writeFileSync(resultPicPath, buffer);
+          console.log(`[CLI] Screenshot saved: ${resultPicPath}`);
+        }
+      }
+      if (!resultPicPath) {
+        console.log('[CLI] No screenshot captured; resultPic will be empty.');
+      }
+
+      const conversationLogPath = saveConversationLog(
+        // For single task run, we can just use all events as it is a fresh process/run
+        allEvents,
+        targetOutputDir,
+        sessionId,
+      );
+
+      const report = {
+        taskId: sessionId,
+        taskContent: answers.instruction || options.query,
+        startTime,
+        endTime,
+        duration,
+        resultPic: resultPicPath,
+        video: videoPath || null,
+        conversationLog: conversationLogPath,
+        finalAnswer,
+      };
+      const reportPath = path.join(targetOutputDir, `${sessionId}.json`);
+      fs.writeFileSync(reportPath, JSON.stringify(report, null, 2));
+      console.log(`Result saved: ${reportPath}`);
+      console.log(`[CLI] Report JSON path: ${reportPath}`);
+    } catch (err) {
+      console.warn('Failed to generate result report:', err);
+    }
+  };
+
+  process.removeAllListeners('SIGINT');
+  process.on('SIGINT', async () => {
+    console.log('\n[CLI] Received SIGINT. Saving report and exiting...');
+    abortController.abort();
+    await saveSingleTaskReport('用户已手动终止');
+    process.exit(0);
+  });
+
   try {
     console.log(
       '[CLI] Starting GUIAgent run with instruction:',
@@ -486,182 +791,27 @@ export const start = async (options: CliOptions) => {
     resultEvent = await guiAgent.run(answers.instruction);
     console.log('[CLI] GUIAgent run completed.');
   } catch (err: any) {
-    console.error('[CLI] GUIAgent run failed.');
-    const errMsg = err?.message || String(err);
-    console.error('[CLI] Error message:', errMsg);
-    if (err?.status) console.error('[CLI] HTTP status:', err.status);
-    if (err?.code) console.error('[CLI] Error code:', err.code);
-    const respData = err?.response?.data || err?.response?.body || err?.data;
-    if (respData) {
-      try {
-        const text = typeof respData === 'string' ? respData : JSON.stringify(respData);
-        console.error('[CLI] Response body:', text.slice(0, 500));
-      } catch (_) {
-        console.error('[CLI] Response body: [unprintable]');
-      }
-    }
-    throw err;
-  }
-  const endTime = Date.now();
-  const duration = endTime - startTime;
-
-  try {
-    const eventStream = guiAgent.getEventStream();
-    const allEvents = eventStream.getEvents();
-    const runStartEvents = allEvents.filter((e: any) => e.type === 'agent_run_start');
-    const sessionId =
-      runStartEvents.length > 0
-        ? (runStartEvents[runStartEvents.length - 1] as any).sessionId
-        : `${Date.now()}`;
-
-    const envEvents = allEvents.filter((e: any) => e.type === 'environment_input');
-    const screenshotEvents = envEvents.filter(
-      (e: any) => e.metadata && e.metadata.type === 'screenshot',
-    );
-    const lastScreenshot =
-      screenshotEvents.length > 0 ? (screenshotEvents[screenshotEvents.length - 1] as any) : null;
-
-    const targetOutputDir = options.output
-      ? path.resolve(options.output)
-      : path.join(os.homedir(), '.gui-agent-results');
-    console.log(`[CLI] Output directory (resolved): ${targetOutputDir}`);
-    fs.mkdirSync(targetOutputDir, { recursive: true });
-    console.log(`[CLI] TaskId/SessionId: ${sessionId}`);
-
-    // Generate video recording from screenshots
-    let videoPath = '';
-    if (screenshotEvents.length > 0) {
-      const tempDir = path.join(os.tmpdir(), 'gui-agent-rec', sessionId);
-      try {
-        fs.mkdirSync(tempDir, { recursive: true });
-
-        const validFrames: { file: string; timestamp: number }[] = [];
-        let frameCount = 0;
-        for (const event of screenshotEvents) {
-          if (Array.isArray((event as any).content)) {
-            const imgPart = ((event as any).content as any[]).find(
-              (c: any) => c.type === 'image_url' && c.image_url && c.image_url.url,
-            );
-            const dataUri: string | undefined = imgPart?.image_url?.url;
-            if (dataUri && typeof dataUri === 'string' && dataUri.startsWith('data:')) {
-              const commaIndex = dataUri.indexOf(',');
-              const base64Data = commaIndex >= 0 ? dataUri.substring(commaIndex + 1) : dataUri;
-              const buffer = Buffer.from(base64Data, 'base64');
-              if (buffer.length > 0) {
-                const extension =
-                  buffer[0] === 0xff && buffer[1] === 0xd8 && buffer[2] === 0xff ? 'jpg' : 'png';
-                const fileName = `${String(frameCount).padStart(4, '0')}.${extension}`;
-                const framePath = path.join(tempDir, fileName);
-                fs.writeFileSync(framePath, buffer);
-                validFrames.push({
-                  file: fileName,
-                  timestamp: (event as any).timestamp || Date.now(),
-                });
-                frameCount++;
-              }
-            }
-          }
-        }
-
-        if (validFrames.length > 0) {
-          const concatFilePath = path.join(tempDir, 'filelist.txt');
-          let fileContent = '';
-          const hasTimestamps = validFrames.some(
-            (f, i) => i > 0 && f.timestamp !== validFrames[0].timestamp,
-          );
-
-          for (let i = 0; i < validFrames.length; i++) {
-            const frame = validFrames[i];
-            let duration = 1.0;
-            if (hasTimestamps && i < validFrames.length - 1) {
-              const diff = (validFrames[i + 1].timestamp - frame.timestamp) / 1000;
-              if (diff > 0.1 && diff < 60) duration = diff;
-            } else if (i === validFrames.length - 1) {
-              duration = 2.0;
-            }
-            fileContent += `file '${frame.file}'\n`;
-            fileContent += `duration ${duration.toFixed(3)}\n`;
-          }
-          if (validFrames.length > 0) {
-            fileContent += `file '${validFrames[validFrames.length - 1].file}'\n`;
-          }
-          fs.writeFileSync(concatFilePath, fileContent);
-
-          const outputVideoPath = path.join(targetOutputDir, `${sessionId}.mp4`);
-          console.log(`[CLI] Generating video recording: ${outputVideoPath}`);
-
-          await new Promise<void>((resolve, reject) => {
-            ffmpeg()
-              .input(concatFilePath)
-              .inputOptions(['-f', 'concat', '-safe', '0'])
-              .output(outputVideoPath)
-              .outputOptions([
-                '-c:v',
-                'libx264',
-                '-pix_fmt',
-                'yuv420p',
-                '-vf',
-                'scale=trunc(iw/2)*2:trunc(ih/2)*2',
-              ])
-              .on('start', (cmd) => console.log(`[CLI] Ffmpeg command: ${cmd}`))
-              .on('stderr', (line) => console.log(`[CLI] Ffmpeg stderr: ${line}`))
-              .on('end', () => resolve())
-              .on('error', (err: any) => reject(err))
-              .run();
-          });
-
-          videoPath = outputVideoPath;
-          console.log(`[CLI] Video saved: ${videoPath}`);
-        }
-      } catch (recErr) {
-        console.warn('[CLI] Failed to generate video recording', recErr);
-      } finally {
-        // Cleanup temp dir
+    if (err.name === 'AbortError' || abortController.signal.aborted) {
+      console.log('[CLI] GUIAgent run aborted.');
+    } else {
+      console.error('[CLI] GUIAgent run failed.');
+      const errMsg = err?.message || String(err);
+      console.error('[CLI] Error message:', errMsg);
+      if (err?.status) console.error('[CLI] HTTP status:', err.status);
+      if (err?.code) console.error('[CLI] Error code:', err.code);
+      const respData = err?.response?.data || err?.response?.body || err?.data;
+      if (respData) {
         try {
-          fs.rmSync(tempDir, { recursive: true, force: true });
+          const text = typeof respData === 'string' ? respData : JSON.stringify(respData);
+          console.error('[CLI] Response body:', text.slice(0, 500));
         } catch (_) {
-          /* ignore */
+          console.error('[CLI] Response body: [unprintable]');
         }
       }
     }
-
-    let resultPicPath = '';
-    if (lastScreenshot && Array.isArray(lastScreenshot.content)) {
-      const imgPart = (lastScreenshot.content as any[]).find(
-        (c: any) => c.type === 'image_url' && c.image_url && c.image_url.url,
-      );
-      const dataUri: string | undefined = imgPart?.image_url?.url;
-      if (dataUri && typeof dataUri === 'string' && dataUri.startsWith('data:')) {
-        const commaIndex = dataUri.indexOf(',');
-        const base64Data = commaIndex >= 0 ? dataUri.substring(commaIndex + 1) : dataUri;
-        const buffer = Buffer.from(base64Data, 'base64');
-        resultPicPath = path.join(targetOutputDir, `${sessionId}.png`);
-        fs.writeFileSync(resultPicPath, buffer);
-        console.log(`[CLI] Screenshot saved: ${resultPicPath}`);
-      }
-    }
-    if (!resultPicPath) {
-      console.log('[CLI] No screenshot captured; resultPic will be empty.');
-    }
-
-    const finalAnswer = (resultEvent as any)?.content ?? '';
-    const report = {
-      taskId: sessionId,
-      taskContent: answers.instruction || options.query,
-      startTime,
-      endTime,
-      duration,
-      resultPic: resultPicPath,
-      video: videoPath || null,
-      finalAnswer,
-    };
-    const reportPath = path.join(targetOutputDir, `${sessionId}.json`);
-    fs.writeFileSync(reportPath, JSON.stringify(report, null, 2));
-    console.log(`Result saved: ${reportPath}`);
-    console.log(`[CLI] Report JSON path: ${reportPath}`);
-  } catch (err) {
-    console.warn('Failed to generate result report:', err);
   }
+
+  await saveSingleTaskReport((resultEvent as any)?.content ?? '');
 };
 
 export const resetConfig = async (configPath?: string) => {
