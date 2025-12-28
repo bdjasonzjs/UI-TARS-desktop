@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { BaseAction, ParsedGUIResponse } from '@gui-agent/shared/types';
-import { BaseActionParser } from '@gui-agent/shared/base';
+import { BaseAction, ParsedGUIResponse } from '@ui-tars-test/shared/types';
+import { BaseActionParser } from '@ui-tars-test/shared/base';
 import { ConsoleLogger, LogLevel } from '@agent-infra/logger';
 import { FormatParserChain } from './FomatParsers';
 import { ActionParserHelper } from './ActionParserHelper';

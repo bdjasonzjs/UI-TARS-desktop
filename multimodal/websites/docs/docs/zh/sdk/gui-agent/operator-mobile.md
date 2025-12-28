@@ -1,1 +1,1 @@
-# @gui-agent/operator-mobile
+# @ui-tars-test/operator-mobile

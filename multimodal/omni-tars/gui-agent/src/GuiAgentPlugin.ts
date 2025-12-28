@@ -8,7 +8,7 @@ import { ConsoleLogger, createGUIErrorResponse, LogLevel } from '@tarko/shared-u
 import { Base64ImageParser } from '@agent-infra/media-utils';
 import { ImageCompressor, formatBytes } from './utils/ImageCompressor';
 import { OperatorManager } from './OperatorManager';
-import { sleep } from '@gui-agent/shared/utils';
+import { sleep } from '@ui-tars-test/shared/utils';
 
 interface GuiAgentPluginOption {
   operatorManager: OperatorManager;

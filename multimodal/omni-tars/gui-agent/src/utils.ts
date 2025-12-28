@@ -5,7 +5,7 @@
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { BaseAction } from '@gui-agent/shared/types';
+import { BaseAction } from '@ui-tars-test/shared/types';
 
 /**
  * Convert parsed prediction to normalized GUI action with percentage coordinates

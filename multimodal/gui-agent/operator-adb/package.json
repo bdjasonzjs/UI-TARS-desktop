@@ -1,5 +1,5 @@
 {
-  "name": "@gui-agent/operator-adb",
+  "name": "@ui-tars-test/operator-adb",
   "description": "Android operator based ADB for GUI Agent",
   "version": "0.3.0",
   "repository": {
@@ -39,7 +39,7 @@
     "@agent-infra/browser": "0.1.1",
     "@agent-infra/logger": "0.0.2-beta.2",
     "@agent-infra/media-utils": "0.1.5",
-    "@gui-agent/shared": "workspace:*",
+    "@ui-tars-test/shared": "workspace:*",
     "appium-adb": "^13.0.3"
   },
   "devDependencies": {

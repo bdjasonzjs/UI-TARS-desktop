@@ -1,4 +1,4 @@
-# @gui-agent/operator-aio
+# @ui-tars-test/operator-aio
 
 AIO (All-in-One) operator for GUI Agent that provides comprehensive computer control capabilities.
 
@@ -13,13 +13,13 @@ AIO (All-in-One) operator for GUI Agent that provides comprehensive computer con
 ## Installation
 
 ```bash
-npm install @gui-agent/operator-aio
+npm install @ui-tars-test/operator-aio
 ```
 
 ## Usage
 
 ```typescript
-import { AioOperator } from '@gui-agent/operator-aio';
+import { AioOperator } from '@ui-tars-test/operator-aio';
 
 // Create AIO operator instance
 const operator = await AioOperator.create();

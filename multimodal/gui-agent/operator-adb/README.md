@@ -7,19 +7,19 @@ Adb Operator is an Android operator based on [ADB](https://developer.android.com
 ## Installation
 
 ```bash
-npm install @gui-agent/operator-adb
+npm install @ui-tars-test/operator-adb
 ```
 
 Or with yarn:
 
 ```bash
-yarn add @gui-agent/operator-adb
+yarn add @ui-tars-test/operator-adb
 ```
 
 Or with pnpm:
 
 ```bash
-pnpm add @gui-agent/operator-adb
+pnpm add @ui-tars-test/operator-adb
 ```
 
 ## Features
@@ -33,7 +33,7 @@ pnpm add @gui-agent/operator-adb
 ## Usage
 
 ```typescript
-import { AdbOperator } from '@gui-agent/operator-adb';
+import { AdbOperator } from '@ui-tars-test/operator-adb';
 import { ConsoleLogger, LogLevel } from '@agent-infra/logger';
 
 // Create a logger

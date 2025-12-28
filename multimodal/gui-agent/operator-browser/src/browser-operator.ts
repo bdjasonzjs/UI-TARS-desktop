@@ -14,9 +14,9 @@ import type {
   SupportedActionType,
   BaseAction,
   Coordinates,
-} from '@gui-agent/shared/types';
-import { Operator, ScreenContext } from '@gui-agent/shared/base';
-import { sleep } from '@gui-agent/shared/utils';
+} from '@ui-tars-test/shared/types';
+import { Operator, ScreenContext } from '@ui-tars-test/shared/base';
+import { sleep } from '@ui-tars-test/shared/utils';
 
 import { UIHelper } from './ui-helper';
 import { BrowserOperatorOptions } from './types';

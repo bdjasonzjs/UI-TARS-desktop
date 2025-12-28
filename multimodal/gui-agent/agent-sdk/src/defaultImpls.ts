@@ -2,7 +2,11 @@
  * Copyright (c) 2025 Bytedance, Inc. and its affiliates.
  * SPDX-License-Identifier: Apache-2.0
  */
-import { Coordinates, ImageDetailCalculator, NormalizeCoordinates } from '@gui-agent/shared/types';
+import {
+  Coordinates,
+  ImageDetailCalculator,
+  NormalizeCoordinates,
+} from '@ui-tars-test/shared/types';
 
 /**
  * Default coordinate normalization function

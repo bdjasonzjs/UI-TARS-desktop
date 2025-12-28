@@ -32,7 +32,7 @@
 ARK_BASE_URL=https://your-model-service-url         # Model Service API endpoint
 ARK_API_KEY=your-actual-model-service-api-key       # Your Model Service API key
 
-# Doubao Models Configuration  
+# Doubao Models Configuration
 DOUBAO_1_5_VP=your-model-key-abcdef                 # Doubao 1.5 VP model endpoint ID
 DOUBAO_SEED_1_6=your-model-key-fedcba               # Doubao Seed 1.6 model endpoint ID
 
@@ -70,9 +70,9 @@ gui-agent-standalone/
 ## DEPENDENCIES
 ### Runtime Dependencies
 - `dotenv`: Environment variable loading
-- `@gui-agent/agent-sdk`: Core GUI agent functionality
-- `@gui-agent/operator-aio`: AIO hybrid operator
-- `@gui-agent/action-parser`: Action parsing utilities
+- `@ui-tars-test/agent-sdk`: Core GUI agent functionality
+- `@ui-tars-test/operator-aio`: AIO hybrid operator
+- `@ui-tars-test/action-parser`: Action parsing utilities
 
 ### Development Dependencies
 - `typescript`: TypeScript compiler
@@ -103,7 +103,7 @@ const doubao = {
     id: process.env.DOUBAO_SEED_1_6!,
     provider: 'volcengine' as const,  // CRITICAL: as const assertion
     baseURL: process.env.ARK_BASE_URL!,
-    apiKey: process.env.ARK_API_KEY!,
+    apiKey: process.env.ARK_API_KEY!, // secretlint-disable-line
 };
 ```
 
@@ -210,7 +210,7 @@ left_double(point='<point>x1 y1</point>')
 right_single(point='<point>x1 y1</point>')
 drag(start_point='<point>x1 y1</point>', end_point='<point>x2 y2</point>')
 hotkey(key='ctrl c') # Split keys with a space and use lowercase. Also, do not use more than 3 keys in one hotkey action.
-type(content='xxx') # Use escape characters \\', \\", and \\n in content part to ensure we can parse the content in normal python string format. If you want to submit your input, use \\n at the end of content. 
+type(content='xxx') # Use escape characters \\', \\", and \\n in content part to ensure we can parse the content in normal python string format. If you want to submit your input, use \\n at the end of content.
 scroll(point='<point>x1 y1</point>', direction='down or up or right or left') # Show more information on the \`direction\` side.
 wait() #Sleep for 5s and take a screenshot to check for any changes.
 finished(content='xxx') # Use escape characters \\', \\", and \\n in content part to ensure we can parse the content in normal python string format.
@@ -227,7 +227,7 @@ finished(content='xxx') # Use escape characters \\', \\", and \\n in content par
 - **navigate(url)**: Navigate to specified URL
 - **navigate_back()**: Go back to previous page
 - **click(point)**: Single left click at coordinates
-- **left_double(point)**: Double left click at coordinates  
+- **left_double(point)**: Double left click at coordinates
 - **right_single(point)**: Single right click at coordinates
 - **drag(start_point, end_point)**: Drag from start to end coordinates
 - **hotkey(key)**: Execute keyboard shortcuts (max 3 keys, space-separated, lowercase)
@@ -268,7 +268,7 @@ const doubao = {
     id: process.env.DOUBAO_SEED_1_6!,
     provider: 'volcengine' as const,  // Critical: literal type
     baseURL: process.env.ARK_BASE_URL!,
-    apiKey: process.env.ARK_API_KEY!,
+    apiKey: process.env.ARK_API_KEY!, // secretlint-disable-line
 };
 
 // 3. Operator Setup

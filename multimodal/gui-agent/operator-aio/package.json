@@ -1,5 +1,5 @@
 {
-  "name": "@gui-agent/operator-aio",
+  "name": "@ui-tars-test/operator-aio",
   "description": "AIO (All-in-One) operator for GUI Agent",
   "version": "0.3.0",
   "repository": {
@@ -33,7 +33,7 @@
     "registry": "https://registry.npmjs.org"
   },
   "dependencies": {
-    "@gui-agent/shared": "workspace:*",
+    "@ui-tars-test/shared": "workspace:*",
     "@agent-infra/browser": "0.1.1",
     "@agent-infra/logger": "0.0.2-beta.2",
     "@agent-infra/sandbox": "0.0.6",

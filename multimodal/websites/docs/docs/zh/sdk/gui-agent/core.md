@@ -1,1 +1,1 @@
-# @gui-agent/core
+# @ui-tars-test/core

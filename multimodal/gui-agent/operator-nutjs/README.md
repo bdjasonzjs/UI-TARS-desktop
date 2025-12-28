@@ -7,19 +7,19 @@ NutJS Operator is a computer operator based on [NutJS](https://github.com/nut-tr
 ## Installation
 
 ```bash
-npm install @gui-agent/operator-nutjs
+npm install @ui-tars-test/operator-nutjs
 ```
 
 Or with yarn:
 
 ```bash
-yarn add @gui-agent/operator-nutjs
+yarn add @ui-tars-test/operator-nutjs
 ```
 
 Or with pnpm:
 
 ```bash
-pnpm add @gui-agent/operator-nutjs
+pnpm add @ui-tars-test/operator-nutjs
 ```
 
 ## Features
@@ -33,7 +33,7 @@ pnpm add @gui-agent/operator-nutjs
 ## Usage
 
 ```typescript
-import { NutJSOperator } from '@gui-agent/operator-nutjs';
+import { NutJSOperator } from '@ui-tars-test/operator-nutjs';
 import { ConsoleLogger, LogLevel } from '@agent-infra/logger';
 
 // Create a logger

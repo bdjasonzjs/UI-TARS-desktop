@@ -5,9 +5,9 @@
 // import { PredictionParsed } from '@ui-tars/shared';
 import { ConsoleLogger } from '@agent-infra/logger';
 import { ChatCompletionMessageToolCall, LogLevel } from '@tarko/agent-interface';
-import { ActionParserHelper } from '@gui-agent/action-parser';
-import { BaseAction, Coordinates } from '@gui-agent/shared/types';
-import { serializeAction } from '@gui-agent/shared/utils';
+import { ActionParserHelper } from '@ui-tars-test/action-parser';
+import { BaseAction, Coordinates } from '@ui-tars-test/shared/types';
+import { serializeAction } from '@ui-tars-test/shared/utils';
 import { convertToAgentUIAction } from './utils';
 
 export interface BrowserVisionControlCall extends ChatCompletionMessageToolCall {

@@ -12,18 +12,18 @@ import {
 import { GUIAgentToolCallEngine } from './ToolCallEngine';
 import { SYSTEM_PROMPT } from './prompts';
 import { Base64ImageParser } from '@agent-infra/media-utils';
-import { Operator, BaseGUIAgent } from '@gui-agent/shared/base';
+import { Operator, BaseGUIAgent } from '@ui-tars-test/shared/base';
 import {
   GUIAgentConfig,
   NormalizeCoordinates,
   ImageDetailCalculator,
-} from '@gui-agent/shared/types';
+} from '@ui-tars-test/shared/types';
 import {
   assembleSystemPrompt,
   isSystemPromptTemplate,
   normalizeActionCoords,
   sleep,
-} from '@gui-agent/shared/utils';
+} from '@ui-tars-test/shared/utils';
 import { GUI_ADAPTED_TOOL_NAME } from './constants';
 import { convertToAgentUIAction, createGUIErrorResponse } from './utils';
 import { defaultNormalizeCoords, defaultDetailCalculator } from './defaultImpls';

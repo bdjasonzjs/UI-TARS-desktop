@@ -2,13 +2,13 @@
  * Copyright (c) 2025 Bytedance, Inc. and its affiliates.
  * SPDX-License-Identifier: Apache-2.0
  */
-import { AdbOperator } from '@gui-agent/operator-adb';
-import { NutJSOperator } from '@gui-agent/operator-nutjs';
+import { AdbOperator } from '@ui-tars-test/operator-adb';
+import { NutJSOperator } from '@ui-tars-test/operator-nutjs';
 import {
   LocalBrowserOperator,
   RemoteBrowserOperator,
   SearchEngine,
-} from '@gui-agent/operator-browser';
+} from '@ui-tars-test/operator-browser';
 
 const computerOperator = new NutJSOperator();
 const androidOperator = new AdbOperator();

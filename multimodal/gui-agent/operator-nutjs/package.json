@@ -1,5 +1,5 @@
 {
-  "name": "@gui-agent/operator-nutjs",
+  "name": "@ui-tars-test/operator-nutjs",
   "description": "computer operator based NutJS for GUI Agent",
   "version": "0.3.0",
   "repository": {
@@ -40,7 +40,7 @@
     "@agent-infra/logger": "0.0.2-beta.2",
     "@agent-infra/sandbox": "0.0.5",
     "@agent-infra/media-utils": "0.1.5",
-    "@gui-agent/shared": "workspace:*",
+    "@ui-tars-test/shared": "workspace:*",
     "@computer-use/nut-js": "^4.2.0",
     "jimp": "1.6.0"
   },

@@ -1,4 +1,4 @@
-# @gui-agent/operator-browser
+# @ui-tars-test/operator-browser
 
 WIP
 

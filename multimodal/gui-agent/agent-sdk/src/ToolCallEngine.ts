@@ -13,11 +13,11 @@ import {
   StreamProcessingState,
   StreamChunkResult,
 } from '@tarko/agent-interface';
-import { DefaultActionParser } from '@gui-agent/action-parser';
+import { DefaultActionParser } from '@ui-tars-test/action-parser';
 import { GUI_ADAPTED_TOOL_NAME } from './constants';
 import { ConsoleLogger, LogLevel } from '@agent-infra/logger';
-import { serializeAction } from '@gui-agent/shared/utils';
-import { CustomActionParser } from '@gui-agent/shared/types';
+import { serializeAction } from '@ui-tars-test/shared/utils';
+import { CustomActionParser } from '@ui-tars-test/shared/types';
 
 const defaultParser = new DefaultActionParser();
 const defaultLogger = new ConsoleLogger('[GUIAgent:ToolCallEngine]', LogLevel.DEBUG);

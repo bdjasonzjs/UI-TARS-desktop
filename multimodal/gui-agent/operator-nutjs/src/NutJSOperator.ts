@@ -9,8 +9,8 @@ import {
   ExecuteParams,
   ExecuteOutput,
   BaseAction,
-} from '@gui-agent/shared/types';
-import { Operator, ScreenContext } from '@gui-agent/shared/base';
+} from '@ui-tars-test/shared/types';
+import { Operator, ScreenContext } from '@ui-tars-test/shared/base';
 import { ConsoleLogger, LogLevel } from '@agent-infra/logger';
 import {
   screen,

@@ -3,11 +3,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 import { ConsoleLogger, LogLevel } from '@agent-infra/logger';
-import { BaseAction } from '@gui-agent/shared/types';
+import { BaseAction } from '@ui-tars-test/shared/types';
 import { XMLBuilder, XMLParser } from 'fast-xml-parser';
 // Remove circular dependency
 import { ActionParserHelper } from './ActionParserHelper';
-import { serializeAction } from '@gui-agent/shared/utils';
+import { serializeAction } from '@ui-tars-test/shared/utils';
 
 export interface FormatParser {
   parse(text: string): {

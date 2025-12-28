@@ -1,1 +1,1 @@
-# @gui-agent/browser
+# @ui-tars-test/browser

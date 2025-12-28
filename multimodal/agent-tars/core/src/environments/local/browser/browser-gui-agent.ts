@@ -5,13 +5,13 @@
  */
 
 import { LocalBrowser, Page, RemoteBrowser } from '@agent-infra/browser';
-import { BrowserOperator } from '@gui-agent/operator-browser';
+import { BrowserOperator } from '@ui-tars-test/operator-browser';
 import { ConsoleLogger, AgentEventStream, Tool, z } from '@tarko/mcp-agent';
 import { ImageCompressor, formatBytes } from '@tarko/shared-media-utils';
 import { ActionInputs, PredictionParsed } from '@agent-tars/interface';
-import { ActionParserHelper } from '@gui-agent/action-parser';
-import { Coordinates, NormalizeCoordinates } from '@gui-agent/shared/types';
-import { normalizeActionCoords } from '@gui-agent/shared/utils';
+import { ActionParserHelper } from '@ui-tars-test/action-parser';
+import { Coordinates, NormalizeCoordinates } from '@ui-tars-test/shared/types';
+import { normalizeActionCoords } from '@ui-tars-test/shared/utils';
 import {
   convertToGUIResponse,
   convertToAgentUIAction,

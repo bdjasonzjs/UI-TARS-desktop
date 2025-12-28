@@ -1,5 +1,5 @@
 {
-  "name": "@gui-agent/operator-browser",
+  "name": "@ui-tars-test/operator-browser",
   "description": "Native-browser operator for GUI Agent",
   "version": "0.3.0",
   "repository": {
@@ -37,7 +37,7 @@
     "@agent-infra/browser": "0.1.1",
     "@agent-infra/logger": "0.0.2-beta.2",
     "@agent-infra/puppeteer-enhance": "0.1.6",
-    "@gui-agent/shared": "workspace:*"
+    "@ui-tars-test/shared": "workspace:*"
   },
   "devDependencies": {
     "@rslib/core": "0.10.0",

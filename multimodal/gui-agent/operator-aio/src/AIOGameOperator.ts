@@ -6,7 +6,7 @@
 import { ConsoleLogger, LogLevel } from '@agent-infra/logger';
 import { AIOHybridOperator } from './AIOHybridOperator';
 import { AIOGameOptions } from './types';
-import { SupportedActionType } from '@gui-agent/shared/types';
+import { SupportedActionType } from '@ui-tars-test/shared/types';
 
 const defaultLogger = new ConsoleLogger(undefined, LogLevel.DEBUG);
 

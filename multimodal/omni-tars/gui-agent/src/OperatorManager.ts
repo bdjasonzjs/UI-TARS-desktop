@@ -1,7 +1,7 @@
 import { LocalBrowser, RemoteBrowser } from '@agent-infra/browser';
-import { BrowserOperator, RemoteBrowserOperator } from '@gui-agent/operator-browser';
-import { AIOGameOperator, AIOHybridOperator } from '@gui-agent/operator-aio';
-import { Operator } from '@gui-agent/shared/base';
+import { BrowserOperator, RemoteBrowserOperator } from '@ui-tars-test/operator-browser';
+import { AIOGameOperator, AIOHybridOperator } from '@ui-tars-test/operator-aio';
+import { Operator } from '@ui-tars-test/shared/base';
 import { AgentMode, getAioUrl } from '@omni-tars/core';
 import { AioClient, CDPVersionResp } from '@agent-infra/sandbox';
 import { defaultLogger } from '@agent-infra/logger';

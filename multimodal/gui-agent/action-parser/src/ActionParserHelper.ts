@@ -5,8 +5,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { ConsoleLogger, LogLevel } from '@agent-infra/logger';
-import { BaseAction, Coordinates, isSupportedActionType } from '@gui-agent/shared/types';
-import { unifyActionInputName, unifyActionType } from '@gui-agent/shared/utils';
+import { BaseAction, Coordinates, isSupportedActionType } from '@ui-tars-test/shared/types';
+import { unifyActionInputName, unifyActionType } from '@ui-tars-test/shared/utils';
 import { XMLBuilder } from 'fast-xml-parser';
 import isNumber from 'lodash.isnumber';
 
@@ -308,7 +308,7 @@ export class ActionParserHelper {
    *
    * @param actionType - The type of the action
    * @param params - The raw parameters of the action
-   * @returns The standardized parameters object for GUIAction(see: @gui-agent/shared/types)
+   * @returns The standardized parameters object for GUIAction(see: @ui-tars-test/shared/types)
    */
   public standardizeAction(roughType: string, roughInputs: Record<string, string>): BaseAction {
     const stdType = unifyActionType(roughType);

@@ -13,11 +13,11 @@ import * as p from '@clack/prompts';
 import { Command } from 'commander';
 import { GUIAgent } from '../src/GUIAgent';
 import { AgentModel } from '@tarko/agent-interface';
-import { Operator } from '@gui-agent/shared/base';
+import { Operator } from '@ui-tars-test/shared/base';
 import { SYSTEM_PROMPT } from '../src/prompts';
 
-import { NutJSOperator } from '@gui-agent/operator-nutjs';
-import { AdbOperator } from '@gui-agent/operator-adb';
+import { NutJSOperator } from '@ui-tars-test/operator-nutjs';
+import { AdbOperator } from '@ui-tars-test/operator-adb';
 import { ConsoleLogger, LogLevel } from '@agent-infra/logger';
 import { doubao_1_5_vp } from './configs/models';
 import { systemPromptTemplate1 } from './configs/promptTemps';

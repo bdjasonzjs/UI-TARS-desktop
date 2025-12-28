@@ -2,7 +2,7 @@
  * Copyright (c) 2025 Bytedance, Inc. and its affiliates.
  * SPDX-License-Identifier: Apache-2.0
  */
-import { SystemPromptTemplate } from '@gui-agent/shared/types';
+import { SystemPromptTemplate } from '@ui-tars-test/shared/types';
 import { SYSTEM_PROMPT_1 } from './prompts';
 
 export const systemPromptTemplate1: SystemPromptTemplate = {

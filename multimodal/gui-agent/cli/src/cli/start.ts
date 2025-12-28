@@ -13,13 +13,13 @@ import ffmpeg from 'fluent-ffmpeg';
 import ffmpegStatic from 'ffmpeg-static';
 
 import fetch from 'node-fetch';
-import { GUIAgent } from '@gui-agent/agent-sdk';
+import { GUIAgent } from '@ui-tars-test/agent-sdk';
 import * as p from '@clack/prompts';
 import yaml from 'js-yaml';
 
-import { NutJSOperator } from '@gui-agent/operator-nutjs';
-import { AdbOperator } from '@gui-agent/operator-adb';
-import { BrowserOperator } from '@gui-agent/operator-browser';
+import { NutJSOperator } from '@ui-tars-test/operator-nutjs';
+import { AdbOperator } from '@ui-tars-test/operator-adb';
+import { BrowserOperator } from '@ui-tars-test/operator-browser';
 
 export interface CliOptions {
   presets?: string;

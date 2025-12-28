@@ -1,1 +1,1 @@
-# @gui-agent/operator-computer
+# @ui-tars-test/operator-computer

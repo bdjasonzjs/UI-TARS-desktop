@@ -4,7 +4,7 @@
  */
 import { Page } from '@agent-infra/browser';
 import { Logger } from '@agent-infra/logger';
-import { BaseAction } from '@gui-agent/shared/types';
+import { BaseAction } from '@ui-tars-test/shared/types';
 
 /**
  * Helper class for UI interactions in the browser

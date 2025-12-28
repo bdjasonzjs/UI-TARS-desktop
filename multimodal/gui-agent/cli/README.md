@@ -1,4 +1,4 @@
-# @gui-agent/cli
+# @ui-tars-test/cli
 
 CLI for GUI Agent - A powerful automation tool for desktop, web, and mobile applications.
 
@@ -6,17 +6,17 @@ CLI for GUI Agent - A powerful automation tool for desktop, web, and mobile appl
 
 ### Global Installation
 ```bash
-npm install -g @gui-agent/cli
+npm install -g @ui-tars-test/cli
 ```
 
 ### Use via npx (without installation)
 ```bash
-npx @gui-agent/cli run [options]
+npx @ui-tars-test/cli run [options]
 ```
 
 ### Local Installation
 ```bash
-npm install @gui-agent/cli
+npm install @ui-tars-test/cli
 ```
 
 ## Usage
