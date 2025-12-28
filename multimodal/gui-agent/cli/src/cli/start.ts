@@ -39,6 +39,9 @@ const saveConversationLog = (events: any[], targetOutputDir: string, sessionId: 
     const time = new Date(e.timestamp || Date.now()).toISOString();
     content += `## [${time}] ${e.type}\n`;
 
+    // Debug raw event structure in console to identify correct fields
+    // console.log(`[DEBUG] Event type: ${e.type}`, JSON.stringify(e, null, 2));
+
     if (e.content) {
       if (Array.isArray(e.content)) {
         e.content.forEach((part: any) => {
@@ -49,6 +52,41 @@ const saveConversationLog = (events: any[], targetOutputDir: string, sessionId: 
         content += `${e.content}\n`;
       } else {
         content += `\`\`\`json\n${JSON.stringify(e.content, null, 2)}\n\`\`\`\n`;
+      }
+    }
+
+    // Check specific event types based on observation
+    // It seems 'tool_call' and 'assistant_message' might store data differently than expected
+    // Let's try to be more permissive in finding the content
+
+    if (e.type === 'tool_call') {
+      // Based on ToolCallEvent interface in agent-event-stream.ts
+      // It has 'name' and 'arguments' properties directly
+      if (e.name) content += `> Tool Call: ${e.name}\n`;
+      if (e.arguments) content += `> Arguments: ${JSON.stringify(e.arguments, null, 2)}\n`;
+
+      // Fallback if it's nested in toolCall property
+      const toolCall = e.toolCall;
+      if (toolCall) {
+        if (toolCall.name) content += `> Tool Call: ${toolCall.name}\n`;
+        if (toolCall.arguments)
+          content += `> Arguments: ${JSON.stringify(toolCall.arguments, null, 2)}\n`;
+      }
+    } else if (e.type === 'assistant_message') {
+      // Based on AssistantMessageEvent interface in agent-event-stream.ts
+      // It has 'content' and 'toolCalls' properties directly
+      if (e.content) content += `${e.content}\n`;
+      if (e.rawContent) content += `\n> Raw Content (Debug): ${JSON.stringify(e.rawContent)}\n`;
+      if (e.toolCalls) content += `> Tool Calls: ${JSON.stringify(e.toolCalls, null, 2)}\n`;
+
+      // Fallback if it's nested in message property
+      const message = e.message;
+      if (message) {
+        if (message.content) content += `${message.content}\n`;
+        if (message.rawContent)
+          content += `\n> Raw Content (Debug): ${JSON.stringify(message.rawContent)}\n`;
+        if (message.tool_calls)
+          content += `> Tool Calls: ${JSON.stringify(message.tool_calls, null, 2)}\n`;
       }
     }
 

@@ -124,17 +124,31 @@ export class GUIAgentToolCallEngine extends ToolCallEngine {
     defaultLogger.log("【New Sys Prompt'】 Model Response:", fullContent);
     defaultLogger.log('[finalizeStreamProcessing] fullContent', fullContent);
 
+    // Add explicit log to confirm XML parsing intent
+    console.log('[CLI DEBUG] [ToolCallEngine] Full model response received:', fullContent);
+
     // Try custom action parser first if available
     let parsedGUIResponse = null;
     if (this.customActionParser) {
       parsedGUIResponse = this.customActionParser(fullContent);
       defaultLogger.log('[finalizeStreamProcessing] Using custom action parser');
+      console.log('[CLI DEBUG] [ToolCallEngine] Using custom action parser');
     }
 
     // Fall back to default parser if custom parser is not available or returns null
     if (!parsedGUIResponse) {
+      console.log('[CLI DEBUG] [ToolCallEngine] Using default action parser (XML parser)');
       parsedGUIResponse = defaultParser.parsePrediction(fullContent);
       defaultLogger.log('[finalizeStreamProcessing] Using default action parser');
+    }
+
+    if (parsedGUIResponse) {
+      console.log(
+        '[CLI DEBUG] [ToolCallEngine] Parsed response:',
+        JSON.stringify(parsedGUIResponse, null, 2),
+      );
+    } else {
+      console.log('[CLI DEBUG] [ToolCallEngine] Parsing failed or returned null');
     }
 
     if (!parsedGUIResponse || parsedGUIResponse.errorMessage) {
