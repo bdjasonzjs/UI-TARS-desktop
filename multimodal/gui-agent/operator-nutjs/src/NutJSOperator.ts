@@ -283,19 +283,40 @@ export class NutJSOperator extends Operator {
   private async calculateRealCoords(
     coords: Coordinates,
   ): Promise<{ realX: number; realY: number }> {
-    if (!coords.normalized) {
-      if (!coords.raw) {
-        throw new Error('Invalide coordinates');
-      }
+    const screenContext = await this.getScreenContext();
+
+    const clamp01 = (value: number): number => Math.min(1, Math.max(0, value));
+
+    if (coords.raw) {
+      // @ts-ignore
+      const raw = coords.raw;
       return {
-        realX: coords.raw.x,
-        realY: coords.raw.y,
+        // @ts-ignore
+        realX: raw.x,
+        // @ts-ignore
+        realY: raw.y,
       };
     }
-    const screenContext = await this.getScreenContext();
+
+    const normalizedX =
+      coords.normalized?.x ??
+      // @ts-ignore
+      (coords.raw ? coords.raw.x / 1000 : null);
+    const normalizedY =
+      coords.normalized?.y ??
+      // @ts-ignore
+      (coords.raw ? coords.raw.y / 1000 : null);
+
+    if (normalizedX === null || normalizedY === null) {
+      throw new Error('Invalide coordinates: neither raw nor normalized coordinates provided');
+    }
+
+    const x = clamp01(normalizedX);
+    const y = clamp01(normalizedY);
+
     return {
-      realX: coords.normalized.x * screenContext.screenWidth,
-      realY: coords.normalized.y * screenContext.screenHeight,
+      realX: x * (screenContext.screenWidth - 1),
+      realY: y * (screenContext.screenHeight - 1),
     };
   }
 

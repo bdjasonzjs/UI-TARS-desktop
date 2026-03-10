@@ -5,7 +5,7 @@
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { AgentOptions } from '@tarko/agent-interface';
+import { AgentOptions } from '@ui-tars-test/tarko-agent-interface';
 import { Factors, BaseAction, Coordinates, SupportedActionType, ActionMetadata } from './actions';
 
 /**

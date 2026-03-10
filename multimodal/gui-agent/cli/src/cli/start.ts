@@ -21,6 +21,14 @@ import { NutJSOperator } from '@ui-tars-test/operator-nutjs';
 import { AdbOperator } from '@ui-tars-test/operator-adb';
 import { BrowserOperator } from '@ui-tars-test/operator-browser';
 
+class ExposedNutJSOperator extends NutJSOperator {
+  public async getScreenResolution() {
+    await this.initialize();
+    const ctx = this.screenContext();
+    return { width: ctx.screenWidth, height: ctx.screenHeight };
+  }
+}
+
 export interface CliOptions {
   presets?: string;
   target?: string;
@@ -187,6 +195,7 @@ export const start = async (options: CliOptions) => {
             message: 'Select model provider:',
             options: [
               { value: 'volcengine', label: 'VolcEngine' },
+              { value: 'azure-openai', label: 'Azure OpenAI' },
               { value: 'anthropic', label: 'Anthropic Claude' },
               { value: 'openai', label: 'OpenAI' },
               { value: 'lm-studio', label: 'LM Studio' },
@@ -207,6 +216,52 @@ export const start = async (options: CliOptions) => {
     );
 
     config = { ...config, ...configAnswers };
+
+    if (config.provider === 'azure-openai') {
+      // Ensure azure config object exists
+      if (!(config as any).azure) {
+        (config as any).azure = {};
+      }
+
+      // Auto-populate azure.endpoint from baseURL if not present
+      // This is crucial for our custom fetch interceptor in llm-client to work
+      if (!(config as any).azure.endpoint && config.baseURL) {
+        (config as any).azure.endpoint = config.baseURL;
+      }
+
+      if (!(config as any).azure?.apiVersion) {
+        const azureConfig = await p.group(
+          {
+            apiVersion: () =>
+              p.text({
+                message: 'please input azure api version (optional, default: 2024-10-01-preview):',
+              }),
+            // Add prompt for X-TT-LOGID which is required for some internal gateways
+            logId: () =>
+              p.text({
+                message: 'please input X-TT-LOGID (optional, for internal gateway):',
+              }),
+          },
+          {
+            onCancel: () => {
+              p.cancel('operation cancelled');
+              process.exit(0);
+            },
+          },
+        );
+
+        if (azureConfig.apiVersion) {
+          (config as any).azure.apiVersion = azureConfig.apiVersion;
+        }
+
+        if (azureConfig.logId) {
+          if (!(config as any).headers) {
+            (config as any).headers = {};
+          }
+          (config as any).headers['X-TT-LOGID'] = azureConfig.logId;
+        }
+      }
+    }
 
     // save config to file
     try {
@@ -307,6 +362,7 @@ export const start = async (options: CliOptions) => {
   }
 
   let targetOperator = null;
+  let screenResolutionInfo = '';
   const targetType =
     options.target ||
     ((await p.select({
@@ -333,7 +389,15 @@ export const start = async (options: CliOptions) => {
       break;
     case 'computer':
     default:
-      targetOperator = new NutJSOperator();
+      const op = new ExposedNutJSOperator();
+      try {
+        const { width, height } = await op.getScreenResolution();
+        screenResolutionInfo = `Current screen resolution: ${width}x${height}. Please output absolute coordinates based on this resolution. `;
+        console.log(`[CLI] Detected screen resolution: ${width}x${height}`);
+      } catch (e) {
+        console.warn('[CLI] Failed to get screen resolution:', e);
+      }
+      targetOperator = op;
       break;
   }
 
@@ -360,7 +424,7 @@ export const start = async (options: CliOptions) => {
   });
 
   const systemPrompts = [
-    'You are provided with a task description, a history of previous actions, and corresponding screenshots. Your goal is to perform the next action to complete the task. Please note that if performing the same action multiple times results in a static screen with no changes, you should attempt a modified or alternative action.',
+    `${screenResolutionInfo}You are provided with a task description, a history of previous actions, and corresponding screenshots. Your goal is to perform the next action to complete the task. Please note that if performing the same action multiple times results in a static screen with no changes, you should attempt a modified or alternative action.`,
     '## Function Definition\n\n- You have access to the following functions:\n{"type": "function", "name": "call_user", "parameters": {"type": "object", "properties": {"content": {"type": "string", "description": "Message or information displayed to the user to request their input, feedback, or guidance."}}, "required": []}, "description": "This function is used to interact with the user by displaying a message and requesting their input, feedback, or guidance."}\n{"type": "function", "name": "click", "parameters": {"type": "object", "properties": {"point": {"type": "string", "description": "Click coordinates. The format is: <point>x y</point>"}}, "required": ["point"]}, "description": "Mouse left single click action."}\n{"type": "function", "name": "drag", "parameters": {"type": "object", "properties": {"start_point": {"type": "string", "description": "Drag start point. The format is: <point>x y</point>"}, "end_point": {"type": "string", "description": "Drag end point. The format is: <point>x y</point>"}}, "required": ["start_point", "end_point"]}, "description": "Mouse left button drag action."}\n{"type": "function", "name": "finished", "parameters": {"type": "object", "properties": {"content": {"type": "string", "description": "Provide the final answer or response to complete the task."}}, "required": []}, "description": "This function is used to indicate the completion of a task by providing the final answer or response."}\n{"type": "function", "name": "hotkey", "parameters": {"type": "object", "properties": {"key": {"type": "string", "description": "Hotkeys you want to press. Split keys with a space and use lowercase."}}, "required": ["key"]}, "description": "Press hotkey."}\n{"type": "function", "function": {"name": "infeasible", "parameters": {"type": "object", "properties": {"content": {"type": "string", "description": "Message or information displayed to the user to explain why the current task is infeasible."}}, "required": ["content"]}, "description": "This function is used to indicate that the current task is infeasible thus agent ends the task."}\n{"type": "function", "name": "left_double", "parameters": {"type": "object", "properties": {"point": {"type": "string", "description": "Click coordinates. The format is: <point>x y</point>"}}, "required": ["point"]}, "description": "Mouse left double click action."}\n{"type": "function", "name": "right_single", "parameters": {"type": "object", "properties": {"point": {"type": "string", "description": "Click coordinates. The format is: <point>x y</point>"}}, "required": ["point"]}, "description": "Mouse right single click action."}\n{"type": "function", "name": "scroll", "parameters": {"type": "object", "properties": {"point": {"type": "string", "description": "Scroll start position. If not specified, default to execute on the current mouse position. The format is: <point>x y</point>"}, "direction": {"type": "string", "description": "Scroll direction.", "enum": ["up", "down", "left", "right"]}}, "required": ["direction", "point"]}, "description": "Scroll action."}\n{"type": "function", "name": "type", "parameters": {"type": "object", "properties": {"content": {"type": "string", "description": "Type content. If you want to submit your input, use \\n at the end of content."}}, "required": ["content"]}, "description": "Type content."}\n{"type": "function", "name": "wait", "parameters": {"type": "object", "properties": {"time": {"type": "integer", "description": "Wait time in seconds."}}, "required": []}, "description": "Wait for a while."}\n\n- To call a function, use the following structure without any suffix:\n\n<think_never_used_51bce0c785ca2f68081bfa7d91973934> reasoning process </think_never_used_51bce0c785ca2f68081bfa7d91973934>\n<seed:tool_call_never_used_51bce0c785ca2f68081bfa7d91973934><function_never_used_51bce0c785ca2f68081bfa7d91973934=example_function_name><parameter_never_used_51bce0c785ca2f68081bfa7d91973934=example_parameter_1>value_1</parameter_never_used_51bce0c785ca2f68081bfa7d91973934><parameter_never_used_51bce0c785ca2f68081bfa7d91973934=example_parameter_2>\nThis is the value for the second parameter\nthat can span\nmultiple lines\n</parameter_never_used_51bce0c785ca2f68081bfa7d91973934></function_never_used_51bce0c785ca2f68081bfa7d91973934></seed:tool_call_never_used_51bce0c785ca2f68081bfa7d91973934>\n\n## Important Notes\n- Function calls must begin with <function_never_used_51bce0c785ca2f68081bfa7d91973934= and end with </function_never_used_51bce0c785ca2f68081bfa7d91973934>.\n- All required parameters must be explicitly provided.\n\n## Additional Notes\n- You can execute multiple actions within a single tool call. For example:\n<seed:tool_call_never_used_51bce0c785ca2f68081bfa7d91973934><function_never_used_51bce0c785ca2f68081bfa7d91973934=example_function_1><parameter_never_used_51bce0c785ca2f68081bfa7d91973934=example_parameter_1>value_1</parameter_never_used_51bce0c785ca2f68081bfa7d91973934><parameter_never_used_51bce0c785ca2f68081bfa7d91973934=example_parameter_2>\nThis is the value for the second parameter\nthat can span\nmultiple lines\n</parameter_never_used_51bce0c785ca2f68081bfa7d91973934></function_never_used_51bce0c785ca2f68081bfa7d91973934><function_never_used_51bce0c785ca2f68081bfa7d91973934=example_function_2><parameter_never_used_51bce0c785ca2f68081bfa7d91973934=example_parameter_3>value_4</parameter_never_used_51bce0c785ca2f68081bfa7d91973934></function_never_used_51bce0c785ca2f68081bfa7d91973934></seed:tool_call_never_used_51bce0c785ca2f68081bfa7d91973934>\n- 当你判断任务请求是无法执行的时候，你应该调用Infeasible工具结束任务并解释原因。\n            判断标准：当一个请求符合以下任何一条标准时，应被归类为“无法执行”。\n            1. 技术/物理层面的矛盾： 指令本身包含逻辑上或物理上无法实现的要求。\n            2. 工具/功能错配： 指令要求在一个软件中执行另一个软件的功能，或者执行该软件根本不具备的功能。\n            3. 超出操作边界/范围： 指令要求执行的操作超出了当前用户会话、权限或应用程序的逻辑边界，涉及未告知的隐私信息或者未授权的操作。\n            4. 依赖隐性知识或外部条件： 任务的完成依赖于Agent无法获取的外部硬件、物理环境、未声明的插件/扩展、或特定的文件/数据。\n\n            输出指令：\n            如果请求被判断为“无法执行”，你应该向用户解释为什么这个任务超出了你的能力范围（例如，指出它需要直接操作某个硬件），并尽可能提供一个指导性的替代方案，让用户可以自己完成该任务。\n            你应该非常非常谨慎地使用Infeasible工具，因为它会直接结束任务并降低用户体验。所以非必要的时候，你不应该调用Infeasible工具，尽量以finish工具结束任务并向用户提示原因就好。',
   ];
 
@@ -370,7 +434,9 @@ export const start = async (options: CliOptions) => {
       provider: config.provider as any, // Type assertion to avoid TypeScript error
       baseURL: config.baseURL,
       apiKey: config.apiKey, // secretlint-disable-line
-    },
+      azure: (config as any).azure,
+      headers: (config as any).headers || (config as any).defaultHeaders,
+    } as any,
     operator: targetOperator,
     systemPrompt: systemPrompts.join('\n\n'),
   });
@@ -430,7 +496,9 @@ export const start = async (options: CliOptions) => {
           provider: config.provider as any, // Type assertion to avoid TypeScript error
           baseURL: config.baseURL,
           apiKey: config.apiKey, // secretlint-disable-line
-        },
+          azure: (config as any).azure,
+          headers: (config as any).headers || (config as any).defaultHeaders,
+        } as any,
         operator: targetOperator,
         systemPrompt: systemPrompts.join('\n\n'),
         // @ts-ignore

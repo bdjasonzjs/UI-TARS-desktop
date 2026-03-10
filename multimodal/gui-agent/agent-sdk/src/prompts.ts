@@ -20,6 +20,15 @@ Action: ...
 
 ## Note
 - Use ${language === 'zh' ? 'Chinese' : 'English'} in \`Thought\` part.
+- **IMPORTANT**: Use **absolute pixel coordinates** for all actions (e.g., click, drag, scroll). Do NOT normalize coordinates to 0-1000.
+- Example: If the screen is 1500x1000 and the target is at the bottom-right, use (1450, 950), NOT (966, 950).
+- The screenshot resolution will be provided in the user message.
+- **IMPORTANT**: Use **absolute pixel coordinates** for all actions (e.g., click, drag, scroll). Do NOT normalize coordinates to 0-1000.
+- Example: If the screen is 1500x1000 and the target is at the bottom-right, use (1450, 950), NOT (966, 950).
+- The screenshot resolution will be provided in the user message.
+- **IMPORTANT**: Use **absolute pixel coordinates** for all actions (e.g., click, drag, scroll). Do NOT normalize coordinates to 0-1000.
+- Example: If the screen is 1500x1000 and the target is at the bottom-right, use (1450, 950), NOT (966, 950).
+- The screenshot resolution will be provided in the user message.
 - Write a small plan and finally summarize your next action (with its target element) in one sentence in \`Thought\` part.
 
 ## User Instruction
@@ -52,6 +61,9 @@ call_user() # Submit the task and call the user when the task is unsolvable, or 
 
 ## Note
 - Use ${language === 'zh' ? 'Chinese' : 'English'} in \`Thought\` part.
+- **IMPORTANT**: Use **absolute pixel coordinates** for all actions (e.g., click, drag, scroll). Do NOT normalize coordinates to 0-1000.
+- Example: If the screen is 1500x1000 and the target is at the bottom-right, use (1450, 950), NOT (966, 950).
+- The screenshot resolution will be provided in the user message.
 - ${useCase === 'normal' ? 'Generate a well-defined and practical strategy in the `Thought` section, summarizing your next move and its objective.' : 'Compose a step-by-step approach in the `Thought` part, specifying your next action and its focus.'}
 
 ## User Instruction
@@ -82,6 +94,9 @@ call_user() # Submit the task and call the user when the task is unsolvable, or 
 
 ## Note
 - Use Chinese in \`Thought\` part.
+- **IMPORTANT**: Use **absolute pixel coordinates** for all actions (e.g., click, drag, scroll). Do NOT normalize coordinates to 0-1000.
+- Example: If the screen is 1500x1000 and the target is at the bottom-right, use (1450, 950), NOT (966, 950).
+- The screenshot resolution will be provided in the user message.
 - Compose a step-by-step approach in the \`Thought\` part, specifying your next action and its focus.
 
 ## User Instruction
@@ -111,6 +126,9 @@ finished(content='xxx') # Use escape characters \\', \\", and \n in content part
 
 ## Note
 - Use ${language === 'zh' ? 'Chinese' : 'English'} in \`Thought\` part.
+- **IMPORTANT**: Use **absolute pixel coordinates** for all actions (e.g., click, drag, scroll). Do NOT normalize coordinates to 0-1000.
+- Example: If the screen is 1500x1000 and the target is at the bottom-right, use (1450, 950), NOT (966, 950).
+- The screenshot resolution will be provided in the user message.
 - Write a small plan and finally summarize your next action (with its target element) in one sentence in \`Thought\` part.
 
 ## User Instruction
@@ -172,6 +190,9 @@ finished(content='xxx') # Submit the task with an report to the user. Use escape
 
 ## Note
 - Use ${language === 'zh' ? 'Chinese' : 'English'} in \`Thought\` part.
+- **IMPORTANT**: Use **absolute pixel coordinates** for all actions (e.g., click, drag, scroll). Do NOT normalize coordinates to 0-1000.
+- Example: If the screen is 1500x1000 and the target is at the bottom-right, use (1450, 950), NOT (966, 950).
+- The screenshot resolution will be provided in the user message.
 - Write a small plan and finally summarize your next action (with its target element) in one sentence in \`Thought\` part.
 - You may stumble upon new rules or features while playing the game or executing GUI tasks for the first time. Make sure to record them in your \`Thought\` and utilize them later.
 - Your thought style should follow the style of thought Examples.
@@ -228,13 +249,13 @@ Action: ...
 
 ## Action Space
 
-click(point='<point>x1 y1</point>')
-left_double(point='<point>x1 y1</point>')
-right_single(point='<point>x1 y1</point>')
-drag(start_point='<point>x1 y1</point>', end_point='<point>x2 y2</point>')
+click(point='<point>1326 36</point>') # Use absolute pixel coordinates.
+left_double(point='<point>1326 36</point>')
+right_single(point='<point>1326 36</point>')
+drag(start_point='<point>100 200</point>', end_point='<point>500 600</point>')
 hotkey(key='ctrl c') # Split keys with a space and use lowercase. Also, do not use more than 3 keys in one hotkey action.
-type(content='xxx') # Use escape characters \\', \\", and \\n in content part to ensure we can parse the content in normal python string format. If you want to submit your input, use \\n at the end of content. 
-scroll(point='<point>x1 y1</point>', direction='down or up or right or left') # Show more information on the \`direction\` side.
+type(content='xxx') # Use escape characters \\', \\", and \\n in content part to ensure we can parse the content in normal python string format. If you want to submit your input, use \\n at the end of content.
+scroll(point='<point>700 800</point>', direction='down or up or right or left') # Show more information on the \`direction\` side.
 wait() #Sleep for 5s and take a screenshot to check for any changes.
 finished(content='xxx') # Use escape characters \\', \\", and \\n in content part to ensure we can parse the content in normal python string format.
 
@@ -242,6 +263,11 @@ finished(content='xxx') # Use escape characters \\', \\", and \\n in content par
 ## Note
 - Use Chinese in \`Thought\` part.
 - Write a small plan and finally summarize your next action (with its target element) in one sentence in \`Thought\` part.
+- **IMPORTANT**: Use **absolute pixel coordinates** for all actions (e.g., click, drag, scroll). Do NOT normalize coordinates to 0-1000.
+- Example: If the screen is 1500x1000 and the target is at the bottom-right, use (1450, 950), NOT (966, 950).
+- The screenshot resolution will be provided in the user message.
+- In your \`Thought\` part, first explicitly state the pixel coordinates you identified from the screenshot, then generate the Action.
+- **Strictly prohibit** using normalized coordinates (0-1000). Always use the raw pixel values observed.
 
 ## User Instruction
 {instruction}
@@ -272,6 +298,10 @@ finished(content='xxx') # Use escape characters \\', \\", and \\n in content par
 
 ## Note
 - You have a budget of actions for one problem. The user will inform you when your time is up, remind your budget.
+- **IMPORTANT**: Use **absolute pixel coordinates** for all actions (e.g., click, drag, scroll). Do NOT normalize coordinates to 0-1000.
+- Example: If the screen is 1500x1000 and the target is at the bottom-right, use (1450, 950), NOT (966, 950).
+- The screenshot resolution will be provided in the user message.
+- In your reasoning process, explicitly mention the pixel coordinates you are targeting.
 
 </COMPUTER_USE_ENVIRONMENT>
 

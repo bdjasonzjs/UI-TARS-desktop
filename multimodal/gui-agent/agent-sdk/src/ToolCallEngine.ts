@@ -12,7 +12,7 @@ import {
   ParsedModelResponse,
   StreamProcessingState,
   StreamChunkResult,
-} from '@tarko/agent-interface';
+} from '@ui-tars-test/tarko-agent-interface';
 import { DefaultActionParser } from '@ui-tars-test/action-parser';
 import { GUI_ADAPTED_TOOL_NAME } from './constants';
 import { ConsoleLogger, LogLevel } from '@agent-infra/logger';
@@ -62,6 +62,10 @@ export class GUIAgentToolCallEngine extends ToolCallEngine {
       messages: context.messages,
       temperature: context.temperature || 0.7,
       stream: true,
+      // When tools are undefined (disabled), tool_choice MUST also be undefined
+      // Otherwise OpenAI/Azure will return 400 Bad Request
+      tool_choice: undefined,
+      tools: undefined,
     };
   }
 
@@ -88,11 +92,15 @@ export class GUIAgentToolCallEngine extends ToolCallEngine {
     chunk: ChatCompletionChunk,
     state: StreamProcessingState,
   ): StreamChunkResult {
+    // For non-streaming requests, the entire response comes in one chunk
     const delta = chunk.choices[0]?.delta;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const message = (chunk.choices[0] as any)?.message;
 
-    // Accumulate content
-    if (delta?.content) {
-      state.contentBuffer += delta.content;
+    // Accumulate content from delta (streaming) or message (non-streaming)
+    const content = delta?.content || message?.content || '';
+    if (content) {
+      state.contentBuffer += content;
     }
 
     // Record finish reason
@@ -102,7 +110,7 @@ export class GUIAgentToolCallEngine extends ToolCallEngine {
 
     // Return incremental content without tool call detection during streaming
     return {
-      content: delta?.content || '',
+      content: content,
       reasoningContent: '',
       hasToolCallUpdate: false,
       toolCalls: [],
@@ -121,6 +129,9 @@ export class GUIAgentToolCallEngine extends ToolCallEngine {
    */
   finalizeStreamProcessing(state: StreamProcessingState): ParsedModelResponse {
     const fullContent = state.contentBuffer;
+    console.log('[DEBUG] Full content length:', fullContent.length);
+    console.log('[DEBUG] Full content prefix:', fullContent.slice(0, 100));
+    console.log('[DEBUG] Full content suffix:', fullContent.slice(-100));
     defaultLogger.log("【New Sys Prompt'】 Model Response:", fullContent);
     defaultLogger.log('[finalizeStreamProcessing] fullContent', fullContent);
 
@@ -135,7 +146,85 @@ export class GUIAgentToolCallEngine extends ToolCallEngine {
       console.log('[CLI DEBUG] [ToolCallEngine] Using custom action parser');
     }
 
-    // Fall back to default parser if custom parser is not available or returns null
+    // Priority: Custom Regex Parser > Default Parser
+    // Check if the content contains the specific XML format with dynamic suffixes
+    if (/<seed:tool_call_never_used_/.test(fullContent)) {
+      console.log(
+        '[CLI DEBUG] [ToolCallEngine] Detected custom XML format. Attempting custom regex parser.',
+      );
+      try {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const actions: any[] = [];
+        // Regex to match <function_...=name>...</function...>
+        // Handles dynamic suffixes like _never_used_...
+        const functionRegex = /<function_[^=>]*=([a-zA-Z0-9_]+)>([\s\S]*?)<\/function_[^>]*>/g;
+        let match;
+
+        while ((match = functionRegex.exec(fullContent)) !== null) {
+          const actionName = match[1];
+          const innerContent = match[2];
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const args: any = {};
+
+          // Regex to match <parameter_...=key>value</parameter...>
+          const paramRegex = /<parameter_[^=>]*=([a-zA-Z0-9_]+)>([\s\S]*?)<\/parameter_[^>]*>/g;
+          let paramMatch;
+          while ((paramMatch = paramRegex.exec(innerContent)) !== null) {
+            const key = paramMatch[1];
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            let value: any = paramMatch[2].trim();
+
+            // Special handling for coordinate parameters (point, start_point, end_point)
+            // Convert string "x y" to { raw: { x, y } } object structure expected by Operators
+            if (
+              ['point', 'start_point', 'end_point', 'start', 'end'].includes(key) &&
+              typeof value === 'string'
+            ) {
+              // Remove potential wrapping tags like <point>...</point>
+              value = value.replace(/^<[^>]+>([\s\S]*?)<\/[^>]+>$/, '$1').trim();
+
+              // Match coordinates pattern: digits followed by comma or space followed by digits
+              // Supports: "100 200", "100, 200", "(100, 200)"
+              const coordsMatch = value.match(/(\d+)[, ]+(\d+)/);
+              if (coordsMatch) {
+                const x = parseInt(coordsMatch[1], 10);
+                const y = parseInt(coordsMatch[2], 10);
+                value = { raw: { x, y } };
+              }
+            }
+
+            args[key] = value;
+          }
+
+          actions.push({
+            type: actionName,
+            inputs: args,
+            thought: '',
+          });
+        }
+
+        // Also try to extract thought from <think_...>...</think_...>
+        const thoughtRegex = /<think_[^>]*>([\s\S]*?)<\/think_[^>]*>/g;
+        const thoughtMatch = thoughtRegex.exec(fullContent);
+        const thoughtContent = thoughtMatch ? thoughtMatch[1].trim() : '';
+
+        if (actions.length > 0) {
+          console.log(
+            `[CLI DEBUG] [ToolCallEngine] Custom regex parser found ${actions.length} actions.`,
+          );
+          parsedGUIResponse = {
+            errorMessage: '',
+            rawContent: fullContent,
+            actions: actions,
+            reasoningContent: thoughtContent,
+          };
+        }
+      } catch (e) {
+        console.error('[CLI DEBUG] [ToolCallEngine] Custom regex parser error:', e);
+      }
+    }
+
+    // Fall back to default parser if regex parser didn't produce results
     if (!parsedGUIResponse) {
       console.log('[CLI DEBUG] [ToolCallEngine] Using default action parser (XML parser)');
       parsedGUIResponse = defaultParser.parsePrediction(fullContent);

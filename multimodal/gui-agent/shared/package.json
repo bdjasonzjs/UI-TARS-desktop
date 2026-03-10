@@ -1,6 +1,6 @@
 {
   "name": "@ui-tars-test/shared",
-  "version": "0.3.0",
+  "version": "0.3.9",
   "description": "Shared types for GUI-Agent",
   "repository": {
     "type": "git",
@@ -55,8 +55,8 @@
   ],
   "dependencies": {
     "@agent-infra/logger": "0.0.2-beta.2",
-    "@tarko/agent": "workspace:*",
-    "@tarko/agent-interface": "workspace:*"
+    "@ui-tars-test/tarko-agent": "^0.3.1",
+    "@ui-tars-test/tarko-agent-interface": "^0.3.1"
   },
   "devDependencies": {
     "@rslib/core": "0.10.0",

@@ -5,7 +5,7 @@
  */
 
 import { BaseAction } from '@ui-tars-test/shared/types';
-import { MultimodalToolCallResult } from '@tarko/agent';
+import { MultimodalToolCallResult } from '@ui-tars-test/tarko-agent';
 
 export const createGUIErrorResponse = (
   action: BaseAction,

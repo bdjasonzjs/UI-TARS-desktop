@@ -1,0 +1,13 @@
+{
+  "provider": "azure-openai",
+  "baseURL": "https://genai-sg-og.tiktok-row.org/gpt/openapi/online/v2/crawl",
+  "apiKey": "8NxmPVPNxPGPz6RyXezsAN8VD2f5oVFf_GPT_AK",
+  "model": "gpt-5.4-2026-03-05",
+  "azure": {
+    "apiVersion": "2024-02-01",
+    "endpoint": "https://genai-sg-og.tiktok-row.org/gpt/openapi/online/v2/crawl"
+  },
+  "headers": {
+    "X-TT-LOGID": "random-123456"
+  }
+}

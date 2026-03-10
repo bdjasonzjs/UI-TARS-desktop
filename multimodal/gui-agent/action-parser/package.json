@@ -1,6 +1,6 @@
 {
   "name": "@ui-tars-test/action-parser",
-  "version": "0.3.0",
+  "version": "0.3.3",
   "description": "Action parser SDK for general action parser",
   "repository": {
     "type": "git",
@@ -34,7 +34,7 @@
   },
   "dependencies": {
     "@ui-tars/shared": "1.2.3",
-    "@ui-tars-test/shared": "workspace:*",
+    "@ui-tars-test/shared": "^0.3.0",
     "@agent-infra/logger": "0.0.2-beta.2",
     "fast-xml-parser": "^4.3.2",
     "lodash.isnumber": "3.0.3"

@@ -1,6 +1,6 @@
 {
   "name": "@ui-tars-test/cli",
-  "version": "0.3.1",
+  "version": "0.3.19",
   "description": "CLI for GUI Agent",
   "repository": {
     "type": "git",
@@ -37,10 +37,10 @@
   },
   "dependencies": {
     "@clack/prompts": "^0.11.0",
-    "@ui-tars-test/agent-sdk": "workspace:*",
-    "@ui-tars-test/operator-adb": "workspace:*",
-    "@ui-tars-test/operator-browser": "workspace:*",
-    "@ui-tars-test/operator-nutjs": "workspace:*",
+    "@ui-tars-test/agent-sdk": "^0.3.18",
+    "@ui-tars-test/operator-adb": "^0.3.0",
+    "@ui-tars-test/operator-browser": "^0.3.0",
+    "@ui-tars-test/operator-nutjs": "^0.3.5",
     "commander": "^14.0.0",
     "ffmpeg-static": "^5.3.0",
     "fluent-ffmpeg": "^2.1.3",

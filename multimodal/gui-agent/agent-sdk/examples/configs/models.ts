@@ -4,7 +4,7 @@
  */
 import { config } from 'dotenv';
 import path from 'node:path';
-import { AgentModel, ModelProviderName } from '@tarko/agent';
+import { AgentModel, ModelProviderName } from '@ui-tars-test/tarko-agent';
 config({ path: path.join(__dirname, '../../', '.env.local') });
 
 export const doubao_1_5_ui_tars: AgentModel = {

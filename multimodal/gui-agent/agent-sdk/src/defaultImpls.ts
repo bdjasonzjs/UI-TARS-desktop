@@ -18,11 +18,12 @@ export const defaultNormalizeCoords: NormalizeCoordinates = (rawCoords: Coordina
   if (!rawCoords.raw) {
     return { normalized: rawCoords };
   }
+  const clamp01 = (value: number): number => Math.min(1, Math.max(0, value));
   const normalizedCoords = {
     ...rawCoords,
     normalized: {
-      x: rawCoords.raw.x / 1000,
-      y: rawCoords.raw.y / 1000,
+      x: clamp01(rawCoords.raw.x / 1000),
+      y: clamp01(rawCoords.raw.y / 1000),
     },
   };
   return { normalized: normalizedCoords };

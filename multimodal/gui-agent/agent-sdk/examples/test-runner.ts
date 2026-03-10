@@ -12,7 +12,7 @@ import fs from 'node:fs';
 import * as p from '@clack/prompts';
 import { Command } from 'commander';
 import { GUIAgent } from '../src/GUIAgent';
-import { AgentModel } from '@tarko/agent-interface';
+import { AgentModel } from '@ui-tars-test/tarko-agent-interface';
 import { Operator } from '@ui-tars-test/shared/base';
 import { SYSTEM_PROMPT } from '../src/prompts';
 

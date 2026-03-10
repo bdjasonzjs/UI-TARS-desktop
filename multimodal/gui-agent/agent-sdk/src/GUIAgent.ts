@@ -8,7 +8,7 @@ import {
   LogLevel,
   Tool,
   ConsoleLogger,
-} from '@tarko/agent';
+} from '@ui-tars-test/tarko-agent';
 import { GUIAgentToolCallEngine } from './ToolCallEngine';
 import { SYSTEM_PROMPT } from './prompts';
 import { Base64ImageParser } from '@agent-infra/media-utils';
@@ -232,6 +232,10 @@ export class GUIAgent<T extends Operator> extends BaseGUIAgent {
           url: base64Uri,
           detail: this.detailCalculator(imageWidth, imageHeight),
         },
+      },
+      {
+        type: 'text',
+        text: `Screen resolution: ${imageWidth}x${imageHeight}. System is running on macOS. Please return actions with absolute coordinates within this resolution.`,
       },
     ];
 
