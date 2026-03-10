@@ -5,7 +5,7 @@
  */
 
 import { AgentServerOptions } from './server';
-import { AgentOptions, Tool, ToolCallEngineType } from '@tarko/agent-interface';
+import { AgentOptions, Tool, ToolCallEngineType } from '@ui-tars-test/tarko-agent-interface';
 
 export type AgentAppConfig<T extends AgentOptions = AgentOptions> = T & AgentServerOptions;
 

@@ -26,10 +26,10 @@
     "dev:agent": "../../tarko/agent-cli/bin/cli.js run ./"
   },
   "dependencies": {
-    "@tarko/agent": "workspace:*",
-    "@omni-tars/core": "workspace:*",
-    "@tarko/agent-interface": "workspace:*",
-    "@agent-infra/sandbox": "0.0.6"
+    "@omni-tars/core": "^0.3.0",
+    "@agent-infra/sandbox": "0.0.6",
+    "@ui-tars-test/tarko-agent": "^0.3.0",
+    "@ui-tars-test/tarko-agent-interface": "^0.3.0"
   },
   "devDependencies": {
     "@rslib/core": "0.10.0",

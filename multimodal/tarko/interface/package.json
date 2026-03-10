@@ -37,8 +37,8 @@
     "prepublishOnly": "pnpm run build"
   },
   "dependencies": {
-    "@tarko/agio": "workspace:*",
-    "@tarko/agent-interface": "workspace:*"
+    "@tarko/agio": "^0.3.0",
+    "@ui-tars-test/tarko-agent-interface": "^0.3.0"
   },
   "devDependencies": {
     "@rslib/core": "0.10.0",

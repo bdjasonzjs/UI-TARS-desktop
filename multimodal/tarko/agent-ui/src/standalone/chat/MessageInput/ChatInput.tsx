@@ -3,7 +3,7 @@ import { FiSend, FiRefreshCw, FiImage, FiSquare, FiX } from 'react-icons/fi';
 import { TbBulb, TbSearch, TbBook, TbSettings, TbBrain, TbBrowser } from 'react-icons/tb';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ConnectionStatus } from '@/common/types';
-import { ChatCompletionContentPart } from '@tarko/agent-interface';
+import { ChatCompletionContentPart } from '@ui-tars-test/tarko-agent-interface';
 import { useSession } from '@/common/hooks/useSession';
 import { useAtom, useSetAtom } from 'jotai';
 import {

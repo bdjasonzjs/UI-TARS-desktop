@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import Agent, { LLMRequestHookPayload, LLMResponseHookPayload, Tool } from '@tarko/agent';
+import Agent, { LLMRequestHookPayload, LLMResponseHookPayload, Tool } from '@ui-tars-test/tarko-agent';
 
 /**
  * Base class that all agent plugins must extends

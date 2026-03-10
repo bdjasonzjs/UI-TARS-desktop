@@ -32,7 +32,7 @@ tarko --tool.include "browser,filesystem" --tool.exclude "run_command,run_script
 ### AgentOptions
 
 ```typescript
-import { Agent } from '@tarko/agent';
+import { Agent } from '@ui-tars-test/tarko-agent';
 
 const agent = new Agent({
   tool: {

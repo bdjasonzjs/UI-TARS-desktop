@@ -6,7 +6,7 @@ import {
   ChatCompletion,
   ChatCompletionChunk,
   ChatCompletionMessageToolCall,
-} from '@tarko/agent-interface';
+} from '@ui-tars-test/tarko-agent-interface';
 
 /**
  * Reconstruct a ChatCompletion object from an array of chunks

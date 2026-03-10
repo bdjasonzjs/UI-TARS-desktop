@@ -5,7 +5,7 @@
 
 import { describe, it, expect, beforeEach } from 'vitest';
 import { ToolCallEngineProvider, ToolCallEngineContext } from '../src';
-import { ToolCallEngine, Tool } from '@tarko/agent';
+import { ToolCallEngine, Tool } from '@ui-tars-test/tarko-agent';
 import {
   ToolCallEnginePrepareRequestContext,
   StreamProcessingState,
@@ -17,7 +17,7 @@ import {
   ChatCompletionMessageParam,
   MultimodalToolCallResult,
   AgentEventStream,
-} from '@tarko/agent-interface';
+} from '@ui-tars-test/tarko-agent-interface';
 import { ToolCallEngineCompositionConfig } from '../src/types';
 import { ComposableToolCallEngine } from '../src/ComposableToolCallEngine';
 

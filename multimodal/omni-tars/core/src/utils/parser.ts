@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { ChatCompletionMessageToolCall } from '@tarko/agent-interface';
+import { ChatCompletionMessageToolCall } from '@ui-tars-test/tarko-agent-interface';
 
 interface ParsedContent {
   answer: string;

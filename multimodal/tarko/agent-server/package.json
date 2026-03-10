@@ -19,18 +19,18 @@
     "test:watch": "vitest"
   },
   "dependencies": {
-    "@tarko/agent-ui-builder": "workspace:*",
-    "@tarko/context-engineer": "workspace:*",
+    "@tarko/agent-ui-builder": "^0.3.0",
+    "@tarko/context-engineer": "^0.3.0",
     "mongoose": "^8.8.4",
     "transliteration": "^2.3.5"
   },
   "devDependencies": {
     "@agent-infra/shared": "0.0.2",
     "@rslib/core": "0.10.0",
-    "@tarko/agent-snapshot": "workspace:*",
-    "@tarko/agio": "workspace:*",
-    "@tarko/interface": "workspace:*",
-    "@tarko/shared-utils": "workspace:*",
+    "@tarko/agent-snapshot": "^0.3.0",
+    "@tarko/agio": "^0.3.0",
+    "@tarko/interface": "^0.3.0",
+    "@tarko/shared-utils": "^0.3.0",
     "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",
     "@types/node": "22.15.30",

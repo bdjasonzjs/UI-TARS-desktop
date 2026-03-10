@@ -14,7 +14,7 @@ description: 为你的 Tarko Agent 添加工具
 ### 基本工具示例
 
 ```typescript
-import { Tool, z } from '@tarko/agent';
+import { Tool, z } from '@ui-tars-test/tarko-agent';
 
 // 获取当前位置的工具
 const locationTool = new Tool({
@@ -52,7 +52,7 @@ const weatherTool = new Tool({
 Tarko 推荐使用 Zod 来定义工具参数，提供类型安全和运行时验证：
 
 ```typescript
-import { Tool, z } from '@tarko/agent';
+import { Tool, z } from '@ui-tars-test/tarko-agent';
 
 // 复杂参数的工具
 const searchTool = new Tool({
@@ -112,7 +112,7 @@ const fileTool = new Tool({
 将工具添加到 Agent：
 
 ```typescript
-import { Agent } from '@tarko/agent';
+import { Agent } from '@ui-tars-test/tarko-agent';
 
 const agent = new Agent({
   model: {

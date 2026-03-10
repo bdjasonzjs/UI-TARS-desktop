@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { ChatCompletionContentPart } from '@tarko/agent-interface';
+import type { ChatCompletionContentPart } from '@ui-tars-test/tarko-agent-interface';
 import fs from 'fs';
 import path from 'path';
 import { beforeEach, afterEach, describe, it, expect, vi } from 'vitest';

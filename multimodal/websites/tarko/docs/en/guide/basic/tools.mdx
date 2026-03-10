@@ -12,7 +12,7 @@ Tools are the core capabilities that enable your Agent to interact with the exte
 Based on the actual Tool class from `multimodal/tarko/agent-interface/src/tool.ts`:
 
 ```typescript
-import { Tool, z } from '@tarko/agent';
+import { Tool, z } from '@ui-tars-test/tarko-agent';
 
 const tool = new Tool({
   id: string,                     // Unique tool identifier
@@ -149,7 +149,7 @@ const httpTool = new Tool({
 ## Using Tools with Agent
 
 ```typescript
-import { Agent, Tool, z, LogLevel } from '@tarko/agent';
+import { Agent, Tool, z, LogLevel } from '@ui-tars-test/tarko-agent';
 
 // Define your tools
 const tools = [locationTool, weatherTool, calculatorTool];

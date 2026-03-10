@@ -3,8 +3,8 @@
   "version": "0.3.0",
   "description": "Default Web UI for Tarko",
   "dependencies": {
-    "@tarko/shared-utils": "workspace:*",
-    "@tarko/ui": "workspace:*",
+    "@tarko/shared-utils": "^0.3.0",
+    "@tarko/ui": "^0.3.0",
     "ansi-to-react": "^6.1.6",
     "classnames": "^2.5.1",
     "framer-motion": "12.19.2",
@@ -20,11 +20,10 @@
     "registry": "https://registry.npmjs.org"
   },
   "devDependencies": {
-    "@agent-tars/interface": "workspace:*",
+    "@agent-tars/interface": "^0.3.0",
     "@rsbuild/core": "1.3.18",
     "@rsbuild/plugin-react": "1.1.1",
-    "@tarko/agent-interface": "workspace:*",
-    "@tarko/interface": "workspace:*",
+    "@tarko/interface": "^0.3.0",
     "@types/react": "^18.2.75",
     "@types/react-dom": "^18.2.24",
     "@types/uuid": "^9.0.8",
@@ -32,7 +31,8 @@
     "diff": "^8.0.2",
     "postcss": "^8.4.49",
     "react-router-dom": "^6.26.1",
-    "tailwindcss": "^3.4.15"
+    "tailwindcss": "^3.4.15",
+    "@ui-tars-test/tarko-agent-interface": "^0.3.0"
   },
   "scripts": {
     "dev": "rsbuild dev",

@@ -9,7 +9,7 @@ import {
   getLogger,
   LLMRequestHookPayload,
   LLMResponseHookPayload,
-} from '@tarko/agent';
+} from '@ui-tars-test/tarko-agent';
 import { AgentComposer } from './AgentComposer';
 import { AgentPlugin } from './AgentPlugin';
 

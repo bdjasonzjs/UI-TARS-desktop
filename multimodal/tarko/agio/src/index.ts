@@ -33,7 +33,7 @@ import {
   AgentEventStream,
   ChatCompletionContentPart,
   ToolCallEngineType,
-} from '@tarko/agent-interface';
+} from '@ui-tars-test/tarko-agent-interface';
 
 export namespace AgioEvent {
   /**

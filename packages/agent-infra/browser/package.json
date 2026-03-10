@@ -30,8 +30,8 @@
     "puppeteer-core": "24.7.2",
     "which": "5.0.0",
     "edge-paths": "3.0.5",
-    "@agent-infra/logger": "workspace:*",
-    "@agent-infra/shared": "workspace:*"
+    "@agent-infra/logger": "^0.0.1",
+    "@agent-infra/shared": "^0.0.2"
   },
   "devDependencies": {
     "@types/which": "3.0.4",

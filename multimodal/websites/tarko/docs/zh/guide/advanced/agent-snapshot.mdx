@@ -23,7 +23,7 @@ Agent Snapshot 捕获：
 启用自动快照创建：
 
 ```typescript
-import { Agent } from '@tarko/agent';
+import { Agent } from '@ui-tars-test/tarko-agent';
 
 const agent = new Agent({
   ...config,
@@ -93,7 +93,7 @@ interface AgentSnapshot {
 ### 加载和回放
 
 ```typescript
-import { Agent, loadSnapshot } from '@tarko/agent';
+import { Agent, loadSnapshot } from '@ui-tars-test/tarko-agent';
 
 // 加载快照
 const snapshot = await loadSnapshot('./snapshots/debug-session-1.json');
@@ -124,7 +124,7 @@ const agent = Agent.fromSnapshot(snapshot);
 
 ```typescript
 import { test, expect } from '@jest/globals';
-import { Agent, loadSnapshot } from '@tarko/agent';
+import { Agent, loadSnapshot } from '@ui-tars-test/tarko-agent';
 
 test('应该正确处理文件操作', async () => {
   // 加载预录制的快照

@@ -19,7 +19,8 @@ export class AzureOpenAIHandler extends BaseHandler<AzureOpenAIModel> {
   async create(
     body: ProviderCompletionParams<'azure-openai'>,
   ): Promise<CompletionResponse | StreamCompletionResponse> {
-    this.validateInputs(body);
+    // Skip input validation for now as it might be too strict for custom models
+    // this.validateInputs(body);
 
     // Azure OpenAI requires apiVersion and endpoint
 

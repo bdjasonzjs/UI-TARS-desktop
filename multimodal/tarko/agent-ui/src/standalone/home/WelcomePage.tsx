@@ -5,7 +5,7 @@ import { FiArrowUpRight, FiRefreshCw } from 'react-icons/fi';
 import { useSession } from '@/common/hooks/useSession';
 import { getWebUIConfig, getLogoUrl, getAgentTitle } from '@/config/web-ui-config';
 import { ChatInput } from '@/standalone/chat/MessageInput';
-import { ChatCompletionContentPart } from '@tarko/agent-interface';
+import { ChatCompletionContentPart } from '@ui-tars-test/tarko-agent-interface';
 import { Tooltip } from '@tarko/ui';
 import { ThemeToggle } from '@/standalone/components';
 import WelcomeCards from './WelcomeCards';

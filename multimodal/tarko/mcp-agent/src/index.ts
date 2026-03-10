@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-export * from '@tarko/agent';
+export * from '@ui-tars-test/tarko-agent';
 
 export * from './mcp-agent';
 export * from './mcp-client-v2';

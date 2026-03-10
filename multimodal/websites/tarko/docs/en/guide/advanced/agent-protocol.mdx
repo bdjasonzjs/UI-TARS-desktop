@@ -188,7 +188,7 @@ interface AgentEvent {
 #### Listening to Events
 
 ```typescript
-import { Agent } from '@tarko/agent';
+import { Agent } from '@ui-tars-test/tarko-agent';
 
 const agent = new Agent({
   // ... configuration
@@ -494,7 +494,7 @@ function AgentChat({ sessionId }: { sessionId: string }) {
 ### CLI Integration
 
 ```typescript
-import { Agent } from '@tarko/agent';
+import { Agent } from '@ui-tars-test/tarko-agent';
 import chalk from 'chalk';
 
 const agent = new Agent({ /* config */ });
@@ -532,7 +532,7 @@ agent.on('error', (event) => {
 ### Monitoring Integration
 
 ```typescript
-import { Agent } from '@tarko/agent';
+import { Agent } from '@ui-tars-test/tarko-agent';
 import { createPrometheusMetrics } from './metrics';
 
 const metrics = createPrometheusMetrics();
@@ -615,7 +615,7 @@ agent.on('*', (event) => {
 ### Protocol Validation
 
 ```typescript
-import { validateEvent, EventSchema } from '@tarko/agent';
+import { validateEvent, EventSchema } from '@ui-tars-test/tarko-agent';
 
 // Validate events against schema
 agent.on('*', (event) => {

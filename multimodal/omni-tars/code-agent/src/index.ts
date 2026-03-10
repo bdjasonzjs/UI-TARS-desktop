@@ -5,7 +5,7 @@
 
 import { ComposableAgent } from '@omni-tars/core';
 import { CodeAgentPlugin } from './CodeAgentPlugin';
-import { AgentOptions } from '@tarko/agent';
+import { AgentOptions } from '@ui-tars-test/tarko-agent';
 import { CodeToolCallEngine } from './CodeToolCallEngine';
 export { CodeToolCallEngineProvider } from './CodeToolCallEngineProvider';
 

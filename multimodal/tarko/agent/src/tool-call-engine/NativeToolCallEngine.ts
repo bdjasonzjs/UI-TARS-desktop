@@ -17,7 +17,7 @@ import {
   StreamChunkResult,
   ChatCompletionMessageToolCall,
   StreamingToolCallUpdate,
-} from '@tarko/agent-interface';
+} from '@ui-tars-test/tarko-agent-interface';
 import { buildToolCallResultMessages } from './utils';
 
 /**

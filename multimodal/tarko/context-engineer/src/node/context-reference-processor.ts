@@ -5,7 +5,7 @@
 
 import fs from 'fs';
 import path from 'path';
-import type { ChatCompletionContentPart } from '@tarko/agent-interface';
+import type { ChatCompletionContentPart } from '@ui-tars-test/tarko-agent-interface';
 import { WorkspacePack } from './workspace-pack';
 
 /**

@@ -11,7 +11,7 @@ import {
   ParsedModelResponse,
   getLogger,
   Tool,
-} from '@tarko/agent';
+} from '@ui-tars-test/tarko-agent';
 import {
   ChatCompletionCreateParams,
   ChatCompletionChunk,
@@ -19,7 +19,7 @@ import {
   ChatCompletionMessageParam,
   MultimodalToolCallResult,
   AgentEventStream,
-} from '@tarko/agent-interface';
+} from '@ui-tars-test/tarko-agent-interface';
 import {
   ToolCallEngineProvider,
   ToolCallEngineContext,

@@ -37,14 +37,14 @@
     "jimp": "1.6.0",
     "js-yaml": "^4.1.0",
     "@clack/prompts": "^0.10.0",
-    "@ui-tars/operator-nut-js": "workspace:*",
-    "@ui-tars/operator-adb": "workspace:*",
-    "@ui-tars/sdk": "workspace:*",
+    "@ui-tars/operator-nut-js": "^1.2.3",
+    "@ui-tars/operator-adb": "^1.2.3",
+    "@ui-tars/sdk": "^1.2.3",
     "node-fetch": "^2.7.0"
   },
   "devDependencies": {
     "@rslib/core": "0.10.0",
-    "@common/configs": "workspace:*",
+    "@common/configs": "^0.0.1",
     "@types/js-yaml": "^4.0.9",
     "typescript": "^5.7.2",
     "vitest": "^3.0.2"

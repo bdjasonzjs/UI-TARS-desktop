@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { ChatCompletionChunk } from '@tarko/agent-interface';
+import { ChatCompletionChunk } from '@ui-tars-test/tarko-agent-interface';
 import { think_token } from '../../../environments/prompt_t5';
 
 // Extracted from code.jsonl - real streaming data for testing

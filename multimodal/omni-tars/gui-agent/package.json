@@ -26,20 +26,20 @@
     "dev:agent": "../../tarko/agent-cli/bin/cli.js run ./"
   },
   "dependencies": {
-    "@tarko/agent": "workspace:*",
-    "@omni-tars/core": "workspace:*",
-    "@tarko/agent-interface": "workspace:*",
-    "@tarko/shared-utils": "workspace:*",
+    "@omni-tars/core": "^0.3.0",
+    "@tarko/shared-utils": "^0.3.0",
     "@agent-infra/logger": "0.0.2-beta.2",
     "@agent-infra/browser": "0.1.1",
     "@agent-infra/media-utils": "0.1.5",
     "@agent-infra/sandbox": "0.0.6",
-    "@ui-tars-test/shared": "workspace:*",
-    "@ui-tars-test/operator-browser": "workspace:*",
-    "@ui-tars-test/operator-aio": "workspace:*",
-    "@ui-tars-test/action-parser": "workspace:*",
+    "@ui-tars-test/shared": "^0.3.0",
+    "@ui-tars-test/operator-browser": "^0.3.0",
+    "@ui-tars-test/operator-aio": "^0.3.0",
+    "@ui-tars-test/action-parser": "^0.3.0",
     "sharp": "^0.33.0",
-    "lodash.isnumber": "3.0.3"
+    "lodash.isnumber": "3.0.3",
+    "@ui-tars-test/tarko-agent": "^0.3.0",
+    "@ui-tars-test/tarko-agent-interface": "^0.3.0"
   },
   "devDependencies": {
     "@rslib/core": "0.10.0",

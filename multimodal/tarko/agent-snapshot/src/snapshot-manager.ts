@@ -6,7 +6,7 @@
 
 import fs from 'fs';
 import path from 'path';
-import { AgentEventStream } from '@tarko/agent-interface';
+import { AgentEventStream } from '@ui-tars-test/tarko-agent-interface';
 import { logger } from './utils/logger';
 import { AgentNormalizerConfig, AgentSnapshotNormalizer } from './utils/snapshot-normalizer';
 

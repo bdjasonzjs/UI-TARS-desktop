@@ -212,7 +212,7 @@ export async function resolveAgentFromCLIArgument(
     return defaultAgent;
   }
 
-  const { Agent } = await import('@tarko/agent');
+  const { Agent } = await import('@ui-tars-test/tarko-agent');
   return {
     type: 'module',
     label: 'Tarko',

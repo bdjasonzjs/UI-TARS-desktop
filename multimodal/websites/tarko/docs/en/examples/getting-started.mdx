@@ -12,7 +12,7 @@ This page provides practical examples to help you get started with Tarko quickly
 Create a simple agent with basic functionality:
 
 ```typescript
-import { Agent, createTool } from '@tarko/agent';
+import { Agent, createTool } from '@ui-tars-test/tarko-agent';
 
 // Create a simple greeting tool
 const greetingTool = createTool({
@@ -53,7 +53,7 @@ export default agent;
 Build an agent that can fetch weather information:
 
 ```typescript
-import { Agent, createTool } from '@tarko/agent';
+import { Agent, createTool } from '@ui-tars-test/tarko-agent';
 
 // Weather tool with real API integration
 const weatherTool = createTool({
@@ -131,7 +131,7 @@ export default weatherAgent;
 Create an agent with mathematical capabilities:
 
 ```typescript
-import { Agent, createTool } from '@tarko/agent';
+import { Agent, createTool } from '@ui-tars-test/tarko-agent';
 
 // Safe math evaluation tool
 const calculatorTool = createTool({
@@ -277,7 +277,7 @@ export default calculatorAgent;
 Build an agent that can interact with the file system:
 
 ```typescript
-import { Agent, createTool } from '@tarko/agent';
+import { Agent, createTool } from '@ui-tars-test/tarko-agent';
 import { promises as fs } from 'fs';
 import path from 'path';
 

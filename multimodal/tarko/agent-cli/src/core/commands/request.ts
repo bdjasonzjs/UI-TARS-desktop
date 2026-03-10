@@ -4,7 +4,7 @@
  */
 
 import path from 'path';
-import { LLMRequester } from '@tarko/agent';
+import { LLMRequester } from '@ui-tars-test/tarko-agent';
 import { resolveValue } from '../../utils';
 
 const colors = {

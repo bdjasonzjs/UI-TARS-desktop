@@ -2,8 +2,8 @@
  * Copyright (c) 2025 Bytedance, Inc. and its affiliates.
  * SPDX-License-Identifier: Apache-2.0
  */
-import { Agent, Tool } from '@tarko/agent';
-import type { JSONSchema7 } from '@tarko/agent';
+import { Agent, Tool } from '@ui-tars-test/tarko-agent';
+import type { JSONSchema7 } from '@ui-tars-test/tarko-agent';
 import { MCPAgentOptions, IMCPClient, MCPServerRegistry } from './mcp-types';
 import { MCPClientV2 } from './mcp-client-v2';
 import { filterItems } from '@tarko/shared-utils';

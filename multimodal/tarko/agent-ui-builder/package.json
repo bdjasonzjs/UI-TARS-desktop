@@ -28,7 +28,7 @@
     "prepublishOnly": "pnpm build"
   },
   "dependencies": {
-    "@tarko/interface": "workspace:*"
+    "@tarko/interface": "^0.3.0"
   },
   "devDependencies": {
     "vitest": "3.2.4",

@@ -7,14 +7,14 @@
 
 import path from 'path';
 import fs from 'fs';
-import { Agent } from '@tarko/agent';
+import { Agent } from '@ui-tars-test/tarko-agent';
 import {
   AgentRunOptions,
   AgentRunObjectOptions,
   AgentEventStream,
   isStreamingOptions,
   isAgentRunObjectOptions,
-} from '@tarko/agent-interface';
+} from '@ui-tars-test/tarko-agent-interface';
 import {
   AgentSnapshotOptions,
   SnapshotGenerationResult,

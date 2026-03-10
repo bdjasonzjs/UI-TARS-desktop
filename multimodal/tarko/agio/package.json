@@ -26,7 +26,7 @@
     "prepublishOnly": "pnpm build"
   },
   "dependencies": {
-    "@tarko/agent-interface": "workspace:*"
+    "@ui-tars-test/tarko-agent-interface": "^0.3.0"
   },
   "devDependencies": {
     "@rslib/core": "0.10.0",

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { ChatCompletionMessageToolCall, Tool, ToolCallEngine } from '@tarko/agent';
+import { ChatCompletionMessageToolCall, Tool, ToolCallEngine } from '@ui-tars-test/tarko-agent';
 
 /**
  * Abstract base class for tool call engine providers that can be composed

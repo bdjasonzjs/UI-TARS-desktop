@@ -22,15 +22,15 @@
     "benchmark:crawl": "cd benchmark/crawl && pnpm start"
   },
   "dependencies": {
-    "@tarko/shared-utils": "workspace:*",
-    "@tarko/shared-media-utils": "workspace:*",
-    "@tarko/mcp-agent": "workspace:*",
-    "@agent-tars/interface": "workspace:*"
+    "@tarko/shared-utils": "^0.3.0",
+    "@tarko/shared-media-utils": "^0.3.0",
+    "@tarko/mcp-agent": "^0.3.0",
+    "@agent-tars/interface": "^0.3.0"
   },
   "devDependencies": {
-    "@ui-tars-test/operator-browser": "workspace:*",
-    "@ui-tars-test/action-parser": "workspace:*",
-    "@ui-tars-test/shared": "workspace:*",
+    "@ui-tars-test/operator-browser": "^0.3.0",
+    "@ui-tars-test/action-parser": "^0.3.0",
+    "@ui-tars-test/shared": "^0.3.0",
     "@agent-infra/mcp-server-browser": "1.1.10",
     "@agent-infra/mcp-server-commands": "1.1.10",
     "@agent-infra/mcp-server-filesystem": "1.1.10",
@@ -38,11 +38,11 @@
     "@agent-infra/browser": "0.1.1",
     "@agent-infra/browser-search": "0.0.5",
     "@agent-infra/shared": "0.0.2",
-    "@tarko/agent": "workspace:*",
-    "@tarko/agent-snapshot": "workspace:*",
+    "@tarko/agent-snapshot": "^0.3.0",
     "@rslib/core": "0.10.0",
     "@types/node": "22.15.30",
     "typescript": "^5.5.3",
-    "vitest": "3.2.4"
+    "vitest": "3.2.4",
+    "@ui-tars-test/tarko-agent": "^0.3.0"
   }
 }

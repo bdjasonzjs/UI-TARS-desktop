@@ -25,7 +25,7 @@ Tool Call Engine 处理：
 **最适合**：支持原生函数调用的模型（GPT-4、Claude 3.5 等）
 
 ```typescript
-import { Agent } from '@tarko/agent';
+import { Agent } from '@ui-tars-test/tarko-agent';
 
 const agent = new Agent({
   toolCallEngine: 'native',
@@ -139,7 +139,7 @@ const agent = new Agent({
 来自 `multimodal/tarko/agent/examples/tool-calls/basic.ts`：
 
 ```typescript
-import { Agent, Tool, z, LogLevel } from '@tarko/agent';
+import { Agent, Tool, z, LogLevel } from '@ui-tars-test/tarko-agent';
 
 const agent = new Agent({
   model: {
@@ -175,7 +175,7 @@ const agent = new Agent({
 ### 启用调试日志
 
 ```typescript
-import { LogLevel } from '@tarko/agent';
+import { LogLevel } from '@ui-tars-test/tarko-agent';
 
 const agent = new Agent({
   toolCallEngine: 'prompt_engineering',

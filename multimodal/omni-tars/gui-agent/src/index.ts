@@ -5,7 +5,7 @@
 
 import { AgentMode, ComposableAgent } from '@omni-tars/core';
 import { GuiAgentPlugin } from './GuiAgentPlugin';
-import { AgentOptions } from '@tarko/agent';
+import { AgentOptions } from '@ui-tars-test/tarko-agent';
 import { GUIAgentToolCallEngine } from './GUIAgentToolCallEngine';
 import { OperatorManager } from './OperatorManager';
 

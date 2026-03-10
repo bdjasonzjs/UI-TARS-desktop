@@ -4,7 +4,7 @@
  */
 // import { PredictionParsed } from '@ui-tars/shared';
 import { ConsoleLogger } from '@agent-infra/logger';
-import { ChatCompletionMessageToolCall, LogLevel } from '@tarko/agent-interface';
+import { ChatCompletionMessageToolCall, LogLevel } from '@ui-tars-test/tarko-agent-interface';
 import { ActionParserHelper } from '@ui-tars-test/action-parser';
 import { BaseAction, Coordinates } from '@ui-tars-test/shared/types';
 import { serializeAction } from '@ui-tars-test/shared/utils';

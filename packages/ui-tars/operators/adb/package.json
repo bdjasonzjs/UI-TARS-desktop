@@ -35,14 +35,14 @@
     "registry": "https://registry.npmjs.org"
   },
   "dependencies": {
-    "@ui-tars/shared": "workspace:*",
+    "@ui-tars/shared": "^1.2.3",
     "execa": "5.0.1",
     "inquirer": "8.2.4",
     "jimp": "1.6.0"
   },
   "devDependencies": {
-    "@ui-tars/sdk": "workspace:*",
-    "@common/configs": "workspace:*",
+    "@ui-tars/sdk": "^1.2.3",
+    "@common/configs": "^0.0.1",
     "@rslib/core": "0.10.0",
     "typescript": "^5.7.2",
     "vitest": "^3.0.2",

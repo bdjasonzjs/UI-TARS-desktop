@@ -5,7 +5,7 @@
 
 import { describe, it, expect } from 'vitest';
 import { Tool, z } from '../../src';
-import { AgentEventStream } from '@tarko/agent-interface';
+import { AgentEventStream } from '@ui-tars-test/tarko-agent-interface';
 import {
   createTestAgent,
   setupAgentTest,

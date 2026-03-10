@@ -19,19 +19,19 @@ pnpm add @tarko/agent
 
 ```typescript
 // Main Agent class
-import { Agent } from '@tarko/agent';
+import { Agent } from '@ui-tars-test/tarko-agent';
 
 // Tool definition
-import { Tool, z } from '@tarko/agent';
+import { Tool, z } from '@ui-tars-test/tarko-agent';
 
 // Type definitions
 import type {
   AgentOptions,
   AgentModel
-} from '@tarko/agent';
+} from '@ui-tars-test/tarko-agent';
 
 // Utilities
-import { getLogger, LogLevel } from '@tarko/agent';
+import { getLogger, LogLevel } from '@ui-tars-test/tarko-agent';
 ```
 
 ## Agent Class
@@ -49,7 +49,7 @@ Based on the actual interface from `multimodal/tarko/agent-interface/src/agent-o
 ```typescript
 interface AgentOptions {
   // Core Configuration
-  id?: string;                    // Unique agent ID (default: "@tarko/agent")
+  id?: string;                    // Unique agent ID (default: "@ui-tars-test/tarko-agent")
   name?: string;                  // Agent identifier (default: "Anonymous")
   instructions?: string;          // System prompt
   
@@ -294,7 +294,7 @@ Based on the actual examples in `multimodal/tarko/agent/examples/`:
 
 ```typescript
 // From examples/tool-calls/basic.ts
-import { Agent, Tool, z, LogLevel } from '@tarko/agent';
+import { Agent, Tool, z, LogLevel } from '@ui-tars-test/tarko-agent';
 
 const locationTool = new Tool({
   id: 'getCurrentLocation',

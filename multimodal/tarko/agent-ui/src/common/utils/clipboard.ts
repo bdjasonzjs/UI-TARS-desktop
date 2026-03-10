@@ -1,4 +1,4 @@
-import { ChatCompletionContentPart } from '@tarko/agent-interface';
+import { ChatCompletionContentPart } from '@ui-tars-test/tarko-agent-interface';
 import { TarkoMultimodalClipboardProtocol } from '@/common/types';
 
 /**

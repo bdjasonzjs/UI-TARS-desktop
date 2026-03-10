@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { getLogger } from '@tarko/agent';
+import { getLogger } from '@ui-tars-test/tarko-agent';
 import { AgentMode } from '../types';
 import { getTimeString } from '../utils/hepler';
 import { HOME_INSTRUCTION, PROXY_INSTRUCTION } from './code';

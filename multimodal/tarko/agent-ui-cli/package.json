@@ -30,9 +30,9 @@
     "prepublishOnly": "pnpm build"
   },
   "dependencies": {
-    "@tarko/agent-ui-builder": "workspace:*",
-    "@tarko/config-loader": "workspace:*",
-    "@tarko/interface": "workspace:*",
+    "@tarko/agent-ui-builder": "^0.3.0",
+    "@tarko/config-loader": "^0.3.0",
+    "@tarko/interface": "^0.3.0",
     "jiti": "2.5.1",
     "cac": "6.7.14"
   },

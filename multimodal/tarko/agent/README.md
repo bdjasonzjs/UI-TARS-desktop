@@ -45,7 +45,7 @@ pnpm add @tarko/agent
 ### Basic Usage
 
 ```typescript
-import { Agent } from '@tarko/agent';
+import { Agent } from '@ui-tars-test/tarko-agent';
 
 // Create an agent with custom instructions
 const agent = new Agent({
@@ -75,7 +75,7 @@ for await (const event of await agent.run({
 ### With Tools
 
 ```typescript
-import { Agent, Tool } from '@tarko/agent';
+import { Agent, Tool } from '@ui-tars-test/tarko-agent';
 
 // Define a custom tool
 const weatherTool: Tool = {

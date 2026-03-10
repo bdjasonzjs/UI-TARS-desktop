@@ -1,5 +1,5 @@
 import { getLogger } from '@tarko/shared-utils';
-import { AgentStatus } from '@tarko/agent-interface';
+import { AgentStatus } from '@ui-tars-test/tarko-agent-interface';
 
 /**
  * Controls the execution state of an Agent and manages abort functionality

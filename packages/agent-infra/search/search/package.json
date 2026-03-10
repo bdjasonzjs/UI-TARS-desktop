@@ -28,14 +28,14 @@
   },
   "dependencies": {
     "@tavily/core": "0.3.1",
-    "@agent-infra/browser-search": "workspace:*",
-    "@agent-infra/bing-search": "workspace:*",
-    "@agent-infra/duckduckgo-search": "workspace:*",
-    "@agent-infra/logger": "workspace:*",
-    "@agent-infra/shared": "workspace:*"
+    "@agent-infra/browser-search": "^0.0.5",
+    "@agent-infra/bing-search": "^0.0.1",
+    "@agent-infra/duckduckgo-search": "^0.0.1",
+    "@agent-infra/logger": "^0.0.1",
+    "@agent-infra/shared": "^0.0.2"
   },
   "devDependencies": {
-    "@agent-infra/browser": "workspace:*",
+    "@agent-infra/browser": "^0.1.1",
     "@types/node": "20.14.8",
     "rimraf": "4.1.0",
     "typescript": "4.9.4",

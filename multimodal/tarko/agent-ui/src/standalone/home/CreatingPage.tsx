@@ -5,7 +5,7 @@ import { useSession } from '@/common/hooks/useSession';
 import { SessionCreatingState } from '@/standalone/chat/components/SessionCreatingState';
 import { globalRuntimeSettingsAtom, resetGlobalRuntimeSettingsAction } from '@/common/state/atoms/globalRuntimeSettings';
 import { createSessionAction } from '@/common/state/actions/sessionActions';
-import { ChatCompletionContentPart } from '@tarko/agent-interface';
+import { ChatCompletionContentPart } from '@ui-tars-test/tarko-agent-interface';
 
 interface LocationState {
   query?: string | ChatCompletionContentPart[];

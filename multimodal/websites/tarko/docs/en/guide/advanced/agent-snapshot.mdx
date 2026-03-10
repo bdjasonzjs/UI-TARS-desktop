@@ -23,7 +23,7 @@ An Agent Snapshot captures:
 Enable automatic snapshot creation:
 
 ```typescript
-import { Agent } from '@tarko/agent';
+import { Agent } from '@ui-tars-test/tarko-agent';
 
 const agent = new Agent({
   ...config,
@@ -93,7 +93,7 @@ interface AgentSnapshot {
 ### Load and Replay
 
 ```typescript
-import { Agent, loadSnapshot } from '@tarko/agent';
+import { Agent, loadSnapshot } from '@ui-tars-test/tarko-agent';
 
 // Load snapshot
 const snapshot = await loadSnapshot('./snapshots/debug-session-1.json');
@@ -124,7 +124,7 @@ const agent = Agent.fromSnapshot(snapshot);
 
 ```typescript
 import { test, expect } from '@jest/globals';
-import { Agent, loadSnapshot } from '@tarko/agent';
+import { Agent, loadSnapshot } from '@ui-tars-test/tarko-agent';
 
 test('should handle file operations correctly', async () => {
   // Load pre-recorded snapshot

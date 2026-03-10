@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiX } from 'react-icons/fi';
-import { ChatCompletionContentPart } from '@tarko/agent-interface';
+import { ChatCompletionContentPart } from '@ui-tars-test/tarko-agent-interface';
 
 interface ImagePreviewInlineProps {
   images: ChatCompletionContentPart[];

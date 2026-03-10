@@ -18,7 +18,7 @@ import {
   StreamProcessingState,
   StreamChunkResult,
   FinishReason,
-} from '@tarko/agent-interface';
+} from '@ui-tars-test/tarko-agent-interface';
 import { zodToJsonSchema } from '../utils';
 import { getLogger } from '@tarko/shared-utils';
 import { buildToolCallResultMessages } from './utils';

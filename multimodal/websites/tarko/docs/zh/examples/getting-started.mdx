@@ -12,7 +12,7 @@ description: 帮助你快速开始使用 Tarko 的实用示例
 创建一个具有基本功能的简单 Agent：
 
 ```typescript
-import { Agent, Tool, z } from '@tarko/agent';
+import { Agent, Tool, z } from '@ui-tars-test/tarko-agent';
 
 // 创建一个简单的问候工具
 const greetingTool = new Tool({
@@ -45,7 +45,7 @@ export default agent;
 构建一个可以获取天气信息的 Agent：
 
 ```typescript
-import { Agent, Tool, z } from '@tarko/agent';
+import { Agent, Tool, z } from '@ui-tars-test/tarko-agent';
 
 // 具有真实 API 集成的天气工具
 const weatherTool = new Tool({
@@ -110,7 +110,7 @@ export default weatherAgent;
 创建一个具有数学功能的 Agent：
 
 ```typescript
-import { Agent, Tool, z } from '@tarko/agent';
+import { Agent, Tool, z } from '@ui-tars-test/tarko-agent';
 
 // 安全的数学计算工具
 const calculatorTool = new Tool({
@@ -233,7 +233,7 @@ export default calculatorAgent;
 构建一个可以与文件系统交互的 Agent：
 
 ```typescript
-import { Agent, Tool, z } from '@tarko/agent';
+import { Agent, Tool, z } from '@ui-tars-test/tarko-agent';
 import { promises as fs } from 'fs';
 import path from 'path';
 

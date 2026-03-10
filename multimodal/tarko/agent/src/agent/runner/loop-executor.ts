@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { AgentEventStream, ToolCallEngine, EachAgentLoopEndContext } from '@tarko/agent-interface';
+import { AgentEventStream, ToolCallEngine, EachAgentLoopEndContext } from '@ui-tars-test/tarko-agent-interface';
 import { getLogger } from '@tarko/shared-utils';
 import { AgentModel } from '@tarko/model-provider';
 import { LLMProcessor } from './llm-processor';

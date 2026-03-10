@@ -10,7 +10,7 @@ import {
   ChatCompletionMessageParam,
   ChatCompletionContentPart,
   ToolCallResult,
-} from '@tarko/agent-interface';
+} from '@ui-tars-test/tarko-agent-interface';
 import { convertToMultimodalToolCallResult } from '../utils/multimodal';
 import { getLogger, isTest } from '@tarko/shared-utils';
 

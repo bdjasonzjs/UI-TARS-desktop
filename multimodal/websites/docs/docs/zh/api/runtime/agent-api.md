@@ -9,7 +9,7 @@
 使用指定配置创建新的 Agent 实例。
 
 ```typescript
-import { Agent } from '@tarko/agent';
+import { Agent } from '@ui-tars-test/tarko-agent';
 
 const agent = new Agent({
   instructions: '你是一个有用的助手',
@@ -183,7 +183,7 @@ console.log(`Agent 有 ${tools.length} 个可用工具`);
 注册 Agent 在执行过程中可以使用的工具。
 
 ```typescript
-import { Tool } from '@tarko/agent';
+import { Tool } from '@ui-tars-test/tarko-agent';
 
 const weatherTool: Tool = {
   name: 'get_weather',
@@ -395,7 +395,7 @@ try {
 ## 示例：完整的 Agent 设置
 
 ```typescript
-import { Agent, Tool } from '@tarko/agent';
+import { Agent, Tool } from '@ui-tars-test/tarko-agent';
 
 // 定义工具
 const calculatorTool: Tool = {

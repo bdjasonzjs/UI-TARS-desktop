@@ -7,7 +7,7 @@ import { ComposableAgent } from '@omni-tars/core';
 import { McpAgentPlugin } from './McpAgentPlugin';
 import { McpManager } from './tools/mcp';
 import { McpToolCallEngine } from './McpToolCallEngine';
-import { AgentOptions } from '@tarko/agent';
+import { AgentOptions } from '@ui-tars-test/tarko-agent';
 export { McpAgentPlugin } from './McpAgentPlugin';
 export { McpToolCallEngineProvider } from './McpToolCallEngineProvider';
 

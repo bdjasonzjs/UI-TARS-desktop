@@ -5,7 +5,7 @@
 
 // Export Agent core
 export { v4 as uuidv4 } from 'uuid';
-export * from '@tarko/agent-interface';
+export * from '@ui-tars-test/tarko-agent-interface';
 
 // Export Agent core
 export * from './agent';
@@ -23,6 +23,6 @@ export { resolveModel } from '@tarko/model-provider';
 export type { AgentModel } from '@tarko/model-provider';
 
 // Export constructor type for convenience
-export type { TConstructor } from '@tarko/agent-interface';
+export type { TConstructor } from '@ui-tars-test/tarko-agent-interface';
 
 export { Agent as default } from './agent';

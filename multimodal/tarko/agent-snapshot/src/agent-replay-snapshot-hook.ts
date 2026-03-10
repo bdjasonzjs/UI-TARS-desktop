@@ -4,7 +4,7 @@
  */
 
 import path from 'path';
-import { Agent } from '@tarko/agent';
+import { Agent } from '@ui-tars-test/tarko-agent';
 import { SnapshotManager, ToolCallData } from './snapshot-manager';
 import { logger } from './utils/logger';
 import {
@@ -17,7 +17,7 @@ import {
   ToolCallResult,
   ChatCompletionMessageToolCall,
   OpenAI,
-} from '@tarko/agent-interface';
+} from '@ui-tars-test/tarko-agent-interface';
 import { AgentHookBase } from './agent-hook-base';
 import { AgentNormalizerConfig } from './utils/snapshot-normalizer';
 

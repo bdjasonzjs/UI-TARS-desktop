@@ -34,13 +34,13 @@
     "registry": "https://registry.npmjs.org"
   },
   "dependencies": {
-    "@ui-tars/shared": "workspace:*",
+    "@ui-tars/shared": "^1.2.3",
     "lodash.isnumber": "3.0.3"
   },
   "devDependencies": {
     "@rslib/core": "0.10.0",
     "@types/lodash.isnumber": "3.0.3",
-    "@common/configs": "workspace:*",
+    "@common/configs": "^0.0.1",
     "typescript": "^5.7.2",
     "vitest": "^3.0.2"
   }

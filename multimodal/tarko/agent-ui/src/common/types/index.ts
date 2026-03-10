@@ -3,7 +3,7 @@ import {
   AgentEventStream,
   ChatCompletionContentPart,
   ChatCompletionMessageToolCall,
-} from '@tarko/agent-interface';
+} from '@ui-tars-test/tarko-agent-interface';
 import { SanitizedAgentOptions, WorkspaceInfo, SessionInfo } from '@tarko/interface';
 
 export { AgentEventStream };

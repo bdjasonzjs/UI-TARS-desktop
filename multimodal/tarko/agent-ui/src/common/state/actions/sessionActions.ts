@@ -10,7 +10,7 @@ import { Message, SessionInfo } from '@/common/types';
 import { connectionStatusAtom } from '../atoms/ui';
 import { replayStateAtom } from '../atoms/replay';
 import { sessionFilesAtom, FileItem } from '../atoms/files';
-import { ChatCompletionContentPart, AgentEventStream } from '@tarko/agent-interface';
+import { ChatCompletionContentPart, AgentEventStream } from '@ui-tars-test/tarko-agent-interface';
 import { SessionItemMetadata } from '@tarko/interface';
 
 // Priority-based file selection for workspace display: HTML > Markdown > Others

@@ -9,7 +9,7 @@ The **Agent** class is the core component of the MCP Agent framework, providing 
 Creates a new Agent instance with the specified configuration.
 
 ```typescript
-import { Agent } from '@tarko/agent';
+import { Agent } from '@ui-tars-test/tarko-agent';
 
 const agent = new Agent({
   instructions: 'You are a helpful assistant',
@@ -183,7 +183,7 @@ console.log(`Agent has ${tools.length} tools available`);
 Registers a tool that the agent can use during execution.
 
 ```typescript
-import { Tool } from '@tarko/agent';
+import { Tool } from '@ui-tars-test/tarko-agent';
 
 const weatherTool: Tool = {
   name: 'get_weather',
@@ -391,7 +391,7 @@ Common error scenarios:
 ## Example: Complete Agent Setup
 
 ```typescript
-import { Agent, Tool } from '@tarko/agent';
+import { Agent, Tool } from '@ui-tars-test/tarko-agent';
 
 // Define tools
 const calculatorTool: Tool = {

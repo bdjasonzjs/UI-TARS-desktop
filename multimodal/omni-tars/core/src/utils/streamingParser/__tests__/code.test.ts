@@ -5,7 +5,7 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { createInitState, processStreamingChunk, OmniStreamProcessingState } from '../index';
 import { realStreamingChunks, createChunk } from '../data/testData';
-import { StreamingToolCallUpdate } from '@tarko/agent-interface';
+import { StreamingToolCallUpdate } from '@ui-tars-test/tarko-agent-interface';
 
 describe('processStreamingChunk', () => {
   let state: OmniStreamProcessingState;

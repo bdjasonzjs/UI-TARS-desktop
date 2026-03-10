@@ -27,11 +27,11 @@
     "dev:agent": "../../tarko/agent-cli/bin/cli.js run ./"
   },
   "dependencies": {
-    "@tarko/agent": "workspace:*",
-    "@tarko/agent-interface": "workspace:*",
     "@agent-infra/logger": "0.0.2-beta.2",
     "@agent-infra/mcp-client": "1.1.6-beta.3",
-    "@tarko/model-provider": "workspace:*"
+    "@tarko/model-provider": "^0.3.0",
+    "@ui-tars-test/tarko-agent": "^0.3.0",
+    "@ui-tars-test/tarko-agent-interface": "^0.3.0"
   },
   "devDependencies": {
     "@rslib/core": "0.10.0",

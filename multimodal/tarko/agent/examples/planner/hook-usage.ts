@@ -8,7 +8,7 @@
  * to enforce specific completion criteria before ending the agent loop
  */
 
-import { LoopTerminationCheckResult } from '@tarko/agent-interface';
+import { LoopTerminationCheckResult } from '@ui-tars-test/tarko-agent-interface';
 import { Agent, AgentOptions, AgentEventStream, LogLevel, Tool, z } from '../../src';
 
 /**

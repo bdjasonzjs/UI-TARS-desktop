@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 import MCPAgent from '../src/index';
-import { LogLevel } from '@tarko/agent';
+import { LogLevel } from '@ui-tars-test/tarko-agent';
 import { Questions } from './question';
 
 async function main() {

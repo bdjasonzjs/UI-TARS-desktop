@@ -37,7 +37,7 @@ export interface AgentBaseOptions {
    * Optional unique identifier for this agent instance.
    * Useful for tracking and logging purposes.
    *
-   * @defaultValue `"@tarko/agent"`
+   * @defaultValue `"@ui-tars-test/tarko-agent"`
    */
   id?: string;
 

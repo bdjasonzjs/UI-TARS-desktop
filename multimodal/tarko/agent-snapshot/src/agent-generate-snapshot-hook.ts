@@ -5,14 +5,14 @@
 
 import path from 'path';
 import fs from 'fs';
-import { Agent } from '@tarko/agent';
+import { Agent } from '@ui-tars-test/tarko-agent';
 import {
   LLMRequestHookPayload,
   LLMResponseHookPayload,
   LLMStreamingResponseHookPayload,
   ChatCompletionMessageToolCall,
   ToolCallResult,
-} from '@tarko/agent-interface';
+} from '@ui-tars-test/tarko-agent-interface';
 import { logger } from './utils/logger';
 import { AgentHookBase } from './agent-hook-base';
 

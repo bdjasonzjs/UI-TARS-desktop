@@ -23,8 +23,8 @@
   "devDependencies": {
     "@types/react": "^18.2.75",
     "@types/react-dom": "^18.2.24",
-    "@tarko/agent": "workspace:*",
     "@types/node": "^18.11.17",
-    "rspress-plugin-mermaid": "^0.3.0"
+    "rspress-plugin-mermaid": "^0.3.0",
+    "@ui-tars-test/tarko-agent": "^0.3.0"
   }
 }

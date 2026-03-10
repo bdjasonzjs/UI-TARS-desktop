@@ -12,7 +12,7 @@ import {
   ParsedModelResponse,
   StreamProcessingState,
   StreamChunkResult,
-} from '@tarko/agent-interface';
+} from '@ui-tars-test/tarko-agent-interface';
 import { zodToJsonSchema } from '../../src/utils';
 
 /**

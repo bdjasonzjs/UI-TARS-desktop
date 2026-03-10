@@ -66,7 +66,7 @@ npm install @tarko/agent
 Create a `index.ts`:
 
 ```ts
-import { Agent, Tool, z, LogLevel } from '@tarko/agent';
+import { Agent, Tool, z, LogLevel } from '@ui-tars-test/tarko-agent';
 
 const locationTool = new Tool({
   id: 'getCurrentLocation',
@@ -154,7 +154,7 @@ const agent = new Agent({
 Based on the actual `AgentOptions` interface from the source code, all options are optional:
 
 ##### Basic Configuration
-- `id`: Unique identifier for the agent instance (default: `"@tarko/agent"`)
+- `id`: Unique identifier for the agent instance (default: `"@ui-tars-test/tarko-agent"`)
 - `name`: Agent name for tracking and logging (default: `"Anonymous"`)
 - `instructions`: Agent system prompt, completely replaces default prompt (default: built-in intelligent assistant prompt)
 
@@ -193,7 +193,7 @@ Based on the actual `AgentOptions` interface from the source code, all options a
 Define a `Tool` instance:
 
 ```ts
-import { Tool, z } from '@tarko/agent';
+import { Tool, z } from '@ui-tars-test/tarko-agent';
 
 const locationTool = new Tool({
   id: 'getCurrentLocation',

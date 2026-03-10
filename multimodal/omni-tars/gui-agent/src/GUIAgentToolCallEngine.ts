@@ -10,7 +10,7 @@ import {
   ChatCompletionMessageParam,
   ParsedModelResponse,
   StreamChunkResult,
-} from '@tarko/agent-interface';
+} from '@ui-tars-test/tarko-agent-interface';
 import {
   processT5StreamingChunk as omniProcessStreamingChunk,
   T5StreamProcessingState as OmniStreamProcessingState,
@@ -18,7 +18,7 @@ import {
   createSystemPromptGroup,
   AgentMode,
 } from '@omni-tars/core';
-import { getLogger } from '@tarko/agent';
+import { getLogger } from '@ui-tars-test/tarko-agent';
 import { GUIAgentT5Adapter } from './GUIAgentT5Adapter';
 
 /**

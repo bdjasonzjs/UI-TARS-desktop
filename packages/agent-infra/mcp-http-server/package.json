@@ -30,7 +30,7 @@
     "watch": "rslib build --watch"
   },
   "dependencies": {
-    "@agent-infra/logger": "workspace:*",
+    "@agent-infra/logger": "^0.0.1",
     "@modelcontextprotocol/sdk": "~1.15.1",
     "express": "^5.1.0"
   },

@@ -25,9 +25,9 @@
     "prepublishOnly": "pnpm run build"
   },
   "dependencies": {
-    "@tarko/mcp-agent-interface": "workspace:*",
-    "@tarko/interface": "workspace:*",
-    "@tarko/agio": "workspace:*"
+    "@tarko/mcp-agent-interface": "^0.3.0",
+    "@tarko/interface": "^0.3.0",
+    "@tarko/agio": "^0.3.0"
   },
   "devDependencies": {
     "@rslib/core": "0.10.0",

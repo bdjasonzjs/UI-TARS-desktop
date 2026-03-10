@@ -8,7 +8,7 @@ import {
   processT5StreamingChunk as processStreamingChunk,
   T5StreamProcessingState,
 } from '../index';
-import { ChatCompletionChunk, StreamingToolCallUpdate } from '@tarko/agent-interface';
+import { ChatCompletionChunk, StreamingToolCallUpdate } from '@ui-tars-test/tarko-agent-interface';
 import { realStreamingChunks } from '../data/testData';
 import { think_token } from '../../../environments/prompt_t5';
 

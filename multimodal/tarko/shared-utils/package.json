@@ -27,8 +27,8 @@
     "prepublishOnly": "pnpm build"
   },
   "dependencies": {
-    "@tarko/agent-interface": "workspace:*",
-    "@agent-infra/logger": "0.0.2-beta.2"
+    "@agent-infra/logger": "0.0.2-beta.2",
+    "@ui-tars-test/tarko-agent-interface": "^0.3.0"
   },
   "devDependencies": {
     "vitest": "3.2.4",

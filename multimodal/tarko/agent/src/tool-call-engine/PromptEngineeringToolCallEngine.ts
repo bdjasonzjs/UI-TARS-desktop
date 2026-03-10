@@ -19,7 +19,7 @@ import {
   StreamChunkResult,
   StreamingToolCallUpdate,
   AgentEventStream,
-} from '@tarko/agent-interface';
+} from '@ui-tars-test/tarko-agent-interface';
 
 import { zodToJsonSchema } from '../utils';
 import { getLogger, isTest } from '@tarko/shared-utils';

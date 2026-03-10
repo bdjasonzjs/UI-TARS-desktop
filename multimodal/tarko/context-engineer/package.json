@@ -47,15 +47,15 @@
     "prepublishOnly": "pnpm build"
   },
   "dependencies": {
-    "@tarko/shared-media-utils": "workspace:*"
+    "@tarko/shared-media-utils": "^0.3.0"
   },
   "devDependencies": {
-    "@tarko/agent-interface": "workspace:*",
     "repomix": "1.2.1",
     "vitest": "3.2.4",
     "@rslib/core": "0.10.0",
     "@types/js-yaml": "4.0.9",
     "@types/node": "22.15.30",
-    "typescript": "^5.5.3"
+    "typescript": "^5.5.3",
+    "@ui-tars-test/tarko-agent-interface": "^0.3.0"
   }
 }

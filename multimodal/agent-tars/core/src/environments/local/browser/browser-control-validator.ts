@@ -5,7 +5,7 @@
 
 import { ConsoleLogger } from '@tarko/mcp-agent';
 import { BrowserControlMode } from '../../../types';
-import { ModelProviderName } from '@tarko/agent';
+import { ModelProviderName } from '@ui-tars-test/tarko-agent';
 
 /**
  * Supported providers for GUI-based browser control strategies

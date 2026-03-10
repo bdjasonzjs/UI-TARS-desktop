@@ -66,7 +66,7 @@ npm install @tarko/agent
 创建 `index.ts`：
 
 ```ts
-import { Agent, Tool, z, LogLevel } from '@tarko/agent';
+import { Agent, Tool, z, LogLevel } from '@ui-tars-test/tarko-agent';
 
 const locationTool = new Tool({
   id: 'getCurrentLocation',
@@ -154,7 +154,7 @@ const agent = new Agent({
 基于源码中实际的 `AgentOptions` 接口，所有选项都是可选的：
 
 ##### 基础配置
-- `id`: Agent 实例的唯一标识符（默认: `"@tarko/agent"`）
+- `id`: Agent 实例的唯一标识符（默认: `"@ui-tars-test/tarko-agent"`）
 - `name`: Agent 名称，用于追踪和日志（默认: `"Anonymous"`）
 - `instructions`: Agent 的系统提示，完全替换默认提示（默认: 内置智能助手提示）
 
@@ -193,7 +193,7 @@ const agent = new Agent({
 定义 `Tool` 实例：
 
 ```ts
-import { Tool, z } from '@tarko/agent';
+import { Tool, z } from '@ui-tars-test/tarko-agent';
 
 const locationTool = new Tool({
   id: 'getCurrentLocation',

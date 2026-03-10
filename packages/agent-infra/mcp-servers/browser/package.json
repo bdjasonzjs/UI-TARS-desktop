@@ -47,16 +47,16 @@
     "watch": "rslib build --watch"
   },
   "dependencies": {
-    "@agent-infra/logger": "workspace:*",
+    "@agent-infra/logger": "^0.0.1",
     "@agent-infra/browser-context": "0.1.2",
     "@modelcontextprotocol/sdk": "~1.15.1",
-    "@ui-tars/action-parser": "workspace:^",
-    "mcp-http-server": "workspace:^",
+    "@ui-tars/action-parser": "^1.2.3",
+    "mcp-http-server": "^1.2.4",
     "puppeteer-core": "24.7.2"
   },
   "devDependencies": {
-    "@agent-infra/browser": "workspace:*",
-    "@agent-infra/browser-use": "workspace:*",
+    "@agent-infra/browser": "^0.1.1",
+    "@agent-infra/browser-use": "^0.1.6",
     "@ghostery/adblocker-puppeteer": "2.5.2",
     "@rslib/core": "0.10.0",
     "@types/diff": "^5.0.9",

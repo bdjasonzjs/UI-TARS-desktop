@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 import { AgentMode, AgentPlugin, COMPUTER_USE_ENVIRONMENT } from '@omni-tars/core';
-import { Tool, LLMRequestHookPayload, ChatCompletionContentPart } from '@tarko/agent';
+import { Tool, LLMRequestHookPayload, ChatCompletionContentPart } from '@ui-tars-test/tarko-agent';
 import { ConsoleLogger, createGUIErrorResponse, LogLevel } from '@tarko/shared-utils';
 import { Base64ImageParser } from '@agent-infra/media-utils';
 import { ImageCompressor, formatBytes } from './utils/ImageCompressor';

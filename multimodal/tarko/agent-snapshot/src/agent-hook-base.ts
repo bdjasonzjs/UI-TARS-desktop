@@ -5,7 +5,7 @@
 
 import path from 'path';
 import fs from 'fs';
-import { Agent } from '@tarko/agent';
+import { Agent } from '@ui-tars-test/tarko-agent';
 import {
   AgentRunOptions,
   LLMRequestHookPayload,
@@ -14,7 +14,7 @@ import {
   ChatCompletionChunk,
   ToolCallResult,
   ChatCompletionMessageToolCall,
-} from '@tarko/agent-interface';
+} from '@ui-tars-test/tarko-agent-interface';
 import { logger } from './utils/logger';
 import { SnapshotManager } from './snapshot-manager';
 

@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { AgentConstructor } from '@tarko/agent-interface';
+import { AgentConstructor } from '@ui-tars-test/tarko-agent-interface';
 import { AgioProviderConstructor } from './server';
 
 /**

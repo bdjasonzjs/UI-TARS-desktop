@@ -17,7 +17,7 @@ import {
   PrepareRequestContext,
   PrepareRequestResult,
   EachAgentLoopEndContext,
-} from '@tarko/agent-interface';
+} from '@ui-tars-test/tarko-agent-interface';
 import { getLogger } from '@tarko/shared-utils';
 
 /**

@@ -1,6 +1,6 @@
 import React from 'react';
 import { AnimatePresence } from 'framer-motion';
-import { ChatCompletionContentPart } from '@tarko/agent-interface';
+import { ChatCompletionContentPart } from '@ui-tars-test/tarko-agent-interface';
 import { useSetAtom } from 'jotai';
 import { ImagePreview } from '../ImagePreview';
 import { ContextualTags } from '../ContextualTags';

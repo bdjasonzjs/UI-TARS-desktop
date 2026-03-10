@@ -11,7 +11,7 @@ import {
   ToolCallEngine,
   ToolCallEngineType,
   AgentContextAwarenessOptions,
-} from '@tarko/agent-interface';
+} from '@ui-tars-test/tarko-agent-interface';
 import { ToolManager } from './tool-manager';
 import { AgentModel, LLMReasoningOptions } from '@tarko/model-provider';
 import { getLogger } from '@tarko/shared-utils';

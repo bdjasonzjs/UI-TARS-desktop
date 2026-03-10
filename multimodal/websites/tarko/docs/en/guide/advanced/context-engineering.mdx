@@ -23,7 +23,7 @@ Traditional agents struggle with long-running tasks due to context window limita
 Configure how the agent manages context and multimodal content:
 
 ```typescript
-import { Agent } from '@tarko/agent';
+import { Agent } from '@ui-tars-test/tarko-agent';
 
 const agent = new Agent({
   context: {
@@ -157,7 +157,7 @@ const response = await agent.run({
 Extend the `MessageHistory` class for custom context management:
 
 ```typescript
-import { MessageHistory } from '@tarko/agent';
+import { MessageHistory } from '@ui-tars-test/tarko-agent';
 
 class CustomMessageHistory extends MessageHistory {
   constructor(eventStream, maxImagesCount = 5) {
@@ -250,7 +250,7 @@ const agent = new Agent({
 ### Enable Debug Logging
 
 ```typescript
-import { LogLevel } from '@tarko/agent';
+import { LogLevel } from '@ui-tars-test/tarko-agent';
 
 const agent = new Agent({
   logLevel: LogLevel.DEBUG, // Enable detailed logging

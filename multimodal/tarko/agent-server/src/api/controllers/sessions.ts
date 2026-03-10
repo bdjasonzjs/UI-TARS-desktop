@@ -675,7 +675,7 @@ function calculateRelevanceScore(
   else if (nameLower.startsWith(queryLower)) {
     score += 800;
   }
-  // 3. Name ends with query (good for searching package names like '@tarko/agent')
+  // 3. Name ends with query (good for searching package names like '@ui-tars-test/tarko-agent')
   else if (nameLower.endsWith(queryLower)) {
     score += 700;
   }

@@ -11,7 +11,7 @@ import {
   ToolCallResult,
   JSONSchema7,
   ChatCompletionMessageToolCall,
-} from '@tarko/agent-interface';
+} from '@ui-tars-test/tarko-agent-interface';
 import { getLogger } from '@tarko/shared-utils';
 import { zodToJsonSchema } from '../../utils';
 

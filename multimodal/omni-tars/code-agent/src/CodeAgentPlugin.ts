@@ -4,7 +4,7 @@
  */
 
 import { AgentPlugin, CODE_ENVIRONMENT } from '@omni-tars/core';
-import { LLMRequestHookPayload, LLMResponseHookPayload, LogLevel } from '@tarko/agent';
+import { LLMRequestHookPayload, LLMResponseHookPayload, LogLevel } from '@ui-tars-test/tarko-agent';
 import { ExcuteBashProvider } from './tools/ExcuteBash';
 import { JupyterCIProvider } from './tools/JupyterCI';
 import { StrReplaceEditorProvider } from './tools/StrReplaceEditor';

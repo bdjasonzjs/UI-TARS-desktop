@@ -3,7 +3,7 @@ import { useSetAtom } from 'jotai';
 import { updateSessionMetadataAction } from '@/common/state/actions/sessionActions';
 import { apiService } from '@/common/services/apiService';
 import { SessionItemMetadata } from '@tarko/interface';
-import { AgentModel } from '@tarko/agent-interface';
+import { AgentModel } from '@ui-tars-test/tarko-agent-interface';
 import { useReplayMode } from '@/common/hooks/useReplayMode';
 import { useAtomValue } from 'jotai';
 import { isProcessingAtom } from '@/common/state/atoms/ui';

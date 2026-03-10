@@ -23,7 +23,7 @@ import {
   IAgent,
   ChatCompletionCreateParams,
   ChatCompletion,
-} from '@tarko/agent-interface';
+} from '@ui-tars-test/tarko-agent-interface';
 
 import { BaseAgent } from './base-agent';
 import { AgentRunner } from './agent-runner';
@@ -56,7 +56,7 @@ export class Agent<T extends AgentOptions = AgentOptions>
   extends BaseAgent<T>
   implements IAgent<T>
 {
-  static label = '@tarko/agent';
+  static label = '@ui-tars-test/tarko-agent';
   private instructions: string;
   private maxIterations: number;
   private maxTokens: number | undefined;
@@ -90,7 +90,7 @@ export class Agent<T extends AgentOptions = AgentOptions>
     this.maxIterations = options.maxIterations ?? 1000;
     this.maxTokens = options.maxTokens;
     this.name = options.name ?? 'Anonymous';
-    this.id = options.id ?? '@tarko/agent';
+    this.id = options.id ?? '@ui-tars-test/tarko-agent';
     this.currentModel = resolveModel(options.model);
 
     // console.log(JSON.stringify(options, null, 2));

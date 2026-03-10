@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { GUIAgent, ActionInputs, PredictionParsed } from '@tarko/agent-interface';
+import { GUIAgent, ActionInputs, PredictionParsed } from '@ui-tars-test/tarko-agent-interface';
 
 /**
  * Execute result interface for GUI operations

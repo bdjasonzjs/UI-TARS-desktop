@@ -17,7 +17,7 @@ import {
   ChatCompletion,
   AgentContextAwarenessOptions,
   Tool,
-} from '@tarko/agent-interface';
+} from '@ui-tars-test/tarko-agent-interface';
 import {
   AgentModel,
   LLMReasoningOptions,
@@ -320,6 +320,12 @@ export class LLMProcessor {
       try {
         const hasChoicesArray = Array.isArray((chunk as any)?.choices);
         if (!hasChoicesArray) {
+          // If usage is present but choices is missing, it might be a final usage chunk
+          // In this case, we just skip processing it but keep it in allChunks
+          if ((chunk as any)?.usage) {
+            continue;
+          }
+
           const preview = (() => {
             try {
               const s = JSON.stringify(rawChunk);

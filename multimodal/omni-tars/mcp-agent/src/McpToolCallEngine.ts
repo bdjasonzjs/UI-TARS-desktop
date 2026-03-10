@@ -2,7 +2,7 @@
  * Copyright (c) 2025 Bytedance, Inc. and its affiliates.
  * SPDX-License-Identifier: Apache-2.0
  */
-import { getLogger, Tool, ToolCallEngine, ToolCallEnginePrepareRequestContext } from '@tarko/agent';
+import { getLogger, Tool, ToolCallEngine, ToolCallEnginePrepareRequestContext } from '@ui-tars-test/tarko-agent';
 import {
   AgentEventStream,
   ChatCompletionAssistantMessageParam,
@@ -13,7 +13,7 @@ import {
   MultimodalToolCallResult,
   ParsedModelResponse,
   StreamChunkResult,
-} from '@tarko/agent-interface';
+} from '@ui-tars-test/tarko-agent-interface';
 import {
   parseMcpContent,
   processT5StreamingChunk as omniProcessStreamingChunk,

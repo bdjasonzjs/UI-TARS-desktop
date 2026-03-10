@@ -4,7 +4,7 @@
  */
 
 import { AgentPlugin } from '../AgentPlugin';
-import { LLMRequestHookPayload, LLMResponseHookPayload } from '@tarko/agent';
+import { LLMRequestHookPayload, LLMResponseHookPayload } from '@ui-tars-test/tarko-agent';
 import { existsSync, mkdirSync, writeFileSync } from 'fs';
 import { join } from 'path';
 

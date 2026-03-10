@@ -36,7 +36,7 @@
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "~1.15.1",
-    "mcp-http-server": "workspace:*"
+    "mcp-http-server": "^1.2.4"
   },
   "devDependencies": {
     "commander": "^13.1.0",

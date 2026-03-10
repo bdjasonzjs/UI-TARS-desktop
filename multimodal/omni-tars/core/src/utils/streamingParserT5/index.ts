@@ -7,7 +7,7 @@ import {
   StreamChunkResult,
   StreamingToolCallUpdate,
   StreamProcessingState,
-} from '@tarko/agent-interface';
+} from '@ui-tars-test/tarko-agent-interface';
 import { extractThinkT5 } from './extractThinkT5';
 import { extractToolCallT5 } from './extractToolCallT5';
 import { extractChatContentT5 } from './extractChatContentT5';

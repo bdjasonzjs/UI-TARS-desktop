@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { Tool, ToolCallEngine, ToolCallEnginePrepareRequestContext } from '@tarko/agent';
+import { Tool, ToolCallEngine, ToolCallEnginePrepareRequestContext } from '@ui-tars-test/tarko-agent';
 import {
   TConstructor,
   ChatCompletionCreateParams,
@@ -15,7 +15,7 @@ import {
   ChatCompletionMessageParam,
   MultimodalToolCallResult,
   AgentEventStream,
-} from '@tarko/agent-interface';
+} from '@ui-tars-test/tarko-agent-interface';
 import { ComposableToolCallEngine } from './ComposableToolCallEngine';
 import { ToolCallEngineCompositionConfig } from './types';
 

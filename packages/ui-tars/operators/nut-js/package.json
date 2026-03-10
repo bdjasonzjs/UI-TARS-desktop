@@ -35,17 +35,17 @@
     "registry": "https://registry.npmjs.org"
   },
   "dependencies": {
-    "@ui-tars/shared": "workspace:*",
+    "@ui-tars/shared": "^1.2.3",
     "big.js": "^6.2.2",
     "jimp": "1.6.0",
     "@computer-use/nut-js": "^4.2.0"
   },
   "peerDependencies": {
-    "@ui-tars/sdk": "workspace:*"
+    "@ui-tars/sdk": "^1.2.3"
   },
   "devDependencies": {
-    "@ui-tars/sdk": "workspace:*",
-    "@common/configs": "workspace:*",
+    "@ui-tars/sdk": "^1.2.3",
+    "@common/configs": "^0.0.1",
     "@rslib/core": "0.10.0",
     "typescript": "^5.7.2",
     "vitest": "^3.0.2",

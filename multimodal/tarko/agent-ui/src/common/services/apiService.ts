@@ -6,7 +6,7 @@ import {
   WorkspaceInfo,
 } from '@/common/types';
 
-import { ChatCompletionContentPart, AgentModel } from '@tarko/agent-interface';
+import { ChatCompletionContentPart, AgentModel } from '@ui-tars-test/tarko-agent-interface';
 import { AgentServerVersionInfo } from '@agent-tars/interface';
 import { API_BASE_URL } from '@/config/web-ui-config';
 

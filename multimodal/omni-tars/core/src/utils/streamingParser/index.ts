@@ -7,7 +7,7 @@ import {
   StreamChunkResult,
   StreamingToolCallUpdate,
   StreamProcessingState,
-} from '@tarko/agent-interface';
+} from '@ui-tars-test/tarko-agent-interface';
 import { extractThink, extractAnswer } from './extractors';
 import { extractCodeEnv } from './extractCode';
 

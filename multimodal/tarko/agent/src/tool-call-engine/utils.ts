@@ -8,7 +8,7 @@ import {
   ChatCompletionContentPart,
   ChatCompletionMessageParam,
   MultimodalToolCallResult,
-} from '@tarko/agent-interface';
+} from '@ui-tars-test/tarko-agent-interface';
 
 const logger = getLogger('ToolCallEngine');
 

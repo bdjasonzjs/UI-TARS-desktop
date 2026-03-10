@@ -33,7 +33,7 @@
     "test:integration": "vitest tests/integration"
   },
   "dependencies": {
-    "@agent-infra/mcp-shared": "workspace:*",
+    "@agent-infra/mcp-shared": "^1.2.29",
     "@modelcontextprotocol/sdk": "~1.15.1",
     "glob": "^10.3.10",
     "minimatch": "^9.0.0",
@@ -41,9 +41,9 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@agent-infra/mcp-server-browser": "workspace:*",
-    "@agent-infra/mcp-server-commands": "workspace:*",
-    "@agent-infra/mcp-server-filesystem": "workspace:*",
+    "@agent-infra/mcp-server-browser": "^1.2.29",
+    "@agent-infra/mcp-server-commands": "^1.2.29",
+    "@agent-infra/mcp-server-filesystem": "^1.2.29",
     "@types/node": "^20.11.24",
     "@types/uuid": "^10.0.0",
     "openai": "^4.86.2",

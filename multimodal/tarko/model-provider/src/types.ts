@@ -42,6 +42,15 @@ export interface Model {
    * Additional headers to include in requests
    */
   headers?: Record<string, string>;
+  /**
+   * Azure OpenAI specific configuration
+   */
+  azure?: {
+    endpoint?: string;
+    apiVersion?: string;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    azureADTokenProvider?: any;
+  };
 }
 
 /**

@@ -5,7 +5,7 @@
  */
 
 import { resolveModel, AgentModel, Model } from '@tarko/model-provider';
-import { LLMRequestHookPayload } from '@tarko/agent-interface';
+import { LLMRequestHookPayload } from '@ui-tars-test/tarko-agent-interface';
 import { getLogger } from '@tarko/shared-utils';
 import { getLLMClient } from '../agent';
 import fs from 'fs';

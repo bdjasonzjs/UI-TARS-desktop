@@ -20,11 +20,12 @@ import {
   ChatCompletionMessageParam as OpenAICompletionMessageParam,
 } from 'openai/resources/index';
 
-export type ConfigOptions = Pick<ClientOptions, 'apiKey' | 'baseURL'> & {
+export type ConfigOptions = Pick<ClientOptions, 'apiKey' | 'baseURL' | 'fetch'> & {
   defaultHeaders?: Record<string, string>;
   azure?: {
     endpoint?: string;
     apiVersion?: string;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     azureADTokenProvider?: any;
   };
 };

@@ -10,7 +10,7 @@ import {
   createT5InitState as createInitState,
   SYSTEM_PROMPT_GROUP,
 } from '@omni-tars/core';
-import { ToolCallEngine, Tool, getLogger } from '@tarko/agent';
+import { ToolCallEngine, Tool, getLogger } from '@ui-tars-test/tarko-agent';
 import {
   ToolCallEnginePrepareRequestContext,
   StreamProcessingState,
@@ -22,7 +22,7 @@ import {
   ChatCompletionMessageParam,
   MultimodalToolCallResult,
   AgentEventStream,
-} from '@tarko/agent-interface';
+} from '@ui-tars-test/tarko-agent-interface';
 
 /**
  * Code execution optimized tool call engine

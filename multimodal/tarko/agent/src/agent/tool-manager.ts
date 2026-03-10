@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { Tool } from '@tarko/agent-interface';
+import { Tool } from '@ui-tars-test/tarko-agent-interface';
 import { getLogger } from '@tarko/shared-utils';
 
 /**

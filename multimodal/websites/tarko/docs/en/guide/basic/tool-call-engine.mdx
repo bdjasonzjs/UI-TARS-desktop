@@ -25,7 +25,7 @@ Based on the actual `ToolCallEngineType` from the source code:
 **Best for**: Models with native function calling support (GPT-4, Claude 3.5, etc.)
 
 ```typescript
-import { Agent } from '@tarko/agent';
+import { Agent } from '@ui-tars-test/tarko-agent';
 
 const agent = new Agent({
   toolCallEngine: 'native',
@@ -139,7 +139,7 @@ const agent = new Agent({
 From `multimodal/tarko/agent/examples/tool-calls/basic.ts`:
 
 ```typescript
-import { Agent, Tool, z, LogLevel } from '@tarko/agent';
+import { Agent, Tool, z, LogLevel } from '@ui-tars-test/tarko-agent';
 
 const agent = new Agent({
   model: {
@@ -175,7 +175,7 @@ const agent = new Agent({
 ### Enable Debug Logging
 
 ```typescript
-import { LogLevel } from '@tarko/agent';
+import { LogLevel } from '@ui-tars-test/tarko-agent';
 
 const agent = new Agent({
   toolCallEngine: 'prompt_engineering',

@@ -4,7 +4,7 @@ import { AgentEventStream, Message } from '@/common/types';
 import { messagesAtom } from '@/common/state/atoms/message';
 import { sessionPanelContentAtom } from '@/common/state/atoms/ui';
 import { shouldUpdatePanelContent } from '../utils/panelContentUpdater';
-import { ChatCompletionContentPartImage } from '@tarko/agent-interface';
+import { ChatCompletionContentPartImage } from '@ui-tars-test/tarko-agent-interface';
 import { StandardPanelContent } from '@/standalone/workspace/types/index';
 
 export class SystemMessageHandler implements EventHandler<AgentEventStream.SystemEvent> {

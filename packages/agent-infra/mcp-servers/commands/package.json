@@ -38,7 +38,7 @@
     "test:integration": "vitest tests/integration"
   },
   "dependencies": {
-    "mcp-http-server": "workspace:*",
+    "mcp-http-server": "^1.2.4",
     "@modelcontextprotocol/sdk": "~1.15.1"
   },
   "devDependencies": {

@@ -79,7 +79,7 @@ export interface LegacyAgentRuntimeSettings {
  */
 
 import { AgioEvent } from '@tarko/agio';
-import { IAgent, TConstructor, AgentOptions, AgentModel } from '@tarko/agent-interface';
+import { IAgent, TConstructor, AgentOptions, AgentModel } from '@ui-tars-test/tarko-agent-interface';
 import { AgentImplementation } from './agent-implementation';
 import { AgentWebUIImplementation } from './web-ui-implementation';
 import { AgentStorageImplementation } from './storage-implementation';

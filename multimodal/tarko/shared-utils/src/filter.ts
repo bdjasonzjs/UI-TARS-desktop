@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { CommonFilterOptions } from '@tarko/agent-interface';
+import { CommonFilterOptions } from '@ui-tars-test/tarko-agent-interface';
 import { getLogger } from './logger';
 
 const logger = getLogger('Filter');

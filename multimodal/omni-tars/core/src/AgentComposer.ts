@@ -4,7 +4,7 @@
  */
 
 import { AgentPlugin } from './AgentPlugin';
-import Agent, { getLogger, LLMRequestHookPayload, LLMResponseHookPayload } from '@tarko/agent';
+import Agent, { getLogger, LLMRequestHookPayload, LLMResponseHookPayload } from '@ui-tars-test/tarko-agent';
 
 /**
  * Composes multiple agent plugins into a unified system prompt and instruction set

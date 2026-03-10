@@ -27,12 +27,12 @@
     "test:watch": "vitest"
   },
   "dependencies": {
-    "@tarko/agent-cli": "workspace:*",
-    "@agent-tars/core": "workspace:*"
+    "@tarko/agent-cli": "^0.3.0",
+    "@agent-tars/core": "^0.3.0"
   },
   "devDependencies": {
     "@rslib/core": "0.10.0",
-    "@agent-tars/interface": "workspace:*",
+    "@agent-tars/interface": "^0.3.0",
     "@types/node": "^20.14.8",
     "typescript": "^5.7.2",
     "rimraf": "^6.0.1"

@@ -2,7 +2,7 @@
  * Copyright (c) 2025 Bytedance, Inc. and its affiliates.
  * SPDX-License-Identifier: Apache-2.0
  */
-import { ChatCompletionChunk } from '@tarko/agent-interface';
+import { ChatCompletionChunk } from '@ui-tars-test/tarko-agent-interface';
 import { describe, it, expect, beforeEach } from 'vitest';
 import {
   createT5InitState,

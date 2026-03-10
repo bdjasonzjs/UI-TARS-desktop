@@ -4,7 +4,7 @@
  */
 
 import { SessionItemMetadata } from '@tarko/interface';
-import { AgentModel } from '@tarko/agent-interface';
+import { AgentModel } from '@ui-tars-test/tarko-agent-interface';
 
 /**
  * Get the display name for a model.

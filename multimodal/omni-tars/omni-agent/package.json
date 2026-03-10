@@ -26,19 +26,19 @@
     "dev:agent": "../../tarko/agent-cli/bin/cli.js run ./"
   },
   "dependencies": {
-    "@omni-tars/code-agent": "workspace:*",
-    "@omni-tars/core": "workspace:*",
-    "@omni-tars/gui-agent": "workspace:*",
-    "@omni-tars/mcp-agent": "workspace:*",
-    "@tarko/agent": "workspace:*"
+    "@omni-tars/code-agent": "^0.3.0",
+    "@omni-tars/core": "^0.3.0",
+    "@omni-tars/gui-agent": "^0.3.0",
+    "@omni-tars/mcp-agent": "^0.3.0",
+    "@ui-tars-test/tarko-agent": "^0.3.0"
   },
   "devDependencies": {
     "@rslib/core": "0.10.0",
-    "@tarko/agent-interface": "workspace:*",
-    "@tarko/interface": "workspace:*",
+    "@tarko/interface": "^0.3.0",
     "@types/node": "22.15.30",
     "openai": "4.93.0",
     "typescript": "^5.5.3",
-    "vitest": "^1.0.0"
+    "vitest": "^1.0.0",
+    "@ui-tars-test/tarko-agent-interface": "^0.3.0"
   }
 }

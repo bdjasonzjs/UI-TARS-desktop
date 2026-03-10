@@ -27,13 +27,13 @@
     "agent:snapshot:test": "npx vitest snapshot/index.test.ts"
   },
   "dependencies": {
-    "@tarko/agent": "workspace:*",
-    "@tarko/agent-snapshot": "workspace:*",
-    "@tarko/mcp-agent-interface": "workspace:*",
-    "@tarko/shared-utils": "workspace:*",
+    "@tarko/agent-snapshot": "^0.3.0",
+    "@tarko/mcp-agent-interface": "^0.3.0",
+    "@tarko/shared-utils": "^0.3.0",
     "@modelcontextprotocol/sdk": "^1.12.1",
     "@agent-infra/mcp-client": "1.2.20",
-    "@agent-infra/logger": "0.0.2-beta.2"
+    "@agent-infra/logger": "0.0.2-beta.2",
+    "@ui-tars-test/tarko-agent": "^0.3.0"
   },
   "devDependencies": {
     "@rslib/core": "0.10.0",

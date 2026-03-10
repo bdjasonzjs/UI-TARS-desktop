@@ -6,7 +6,7 @@
 import type {
   ChatCompletionContentPart,
   ChatCompletionContentPartImage,
-} from '@tarko/agent-interface';
+} from '@ui-tars-test/tarko-agent-interface';
 import { ImageCompressor, formatBytes } from '@tarko/shared-media-utils';
 
 /**
